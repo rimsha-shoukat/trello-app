@@ -13,11 +13,11 @@ export default function Home() {
     e.preventDefault();
     const newBoard = { title : title, color: color, description: description };
     const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
     setTitle('');
     setColor("#cacaca");
     setDescription('');
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (

@@ -18,6 +18,7 @@ export default function Home() {
     setColor("#cacaca");
     setDescription('');
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (

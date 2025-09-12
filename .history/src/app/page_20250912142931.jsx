@@ -3,21 +3,21 @@ import { useState } from 'react';
 import Board from "@/components/board";
 
 export default function Home() {
-  const [boardList, setBoardList] = useState([]);
+  const [boardList, setBoardList] = useState('');
   const [boardBox, setBoardBox] = useState(false);
   const [title, setTitle] = useState('');
-  const [color, setColor] = useState("#cacaca");
+  const [color, setColor] = useState('');
   const [description, setDescription] = useState('');
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { title : title, color: color, description: description };
-    const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
+    const newBoard = { title, color, description };
+    setBoardList([...boardList, newBoard]);
     setTitle('');
-    setColor("#cacaca");
+    setColor('');
     setDescription('');
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (
@@ -40,11 +40,7 @@ export default function Home() {
                 className="border-2 p-2 rounded-md w-[14rem] border-gray-800/50 focus:outline-none focus:ring-0"
                 placeholder="Enter board title" required
               />
-              <input
-                type="color" value={ color } onChange={ (e) => setColor(e.target.value) }
-                className="p-[0.25rem] cursor-pointer rounded-md w-10 h-10 shadow-sm hover:scale-105"
-                title="Pick a color"
-              />
+              
             </div>
             <textarea
               rows="3" value={ description } onChange={ (e) => setDescription(e.target.value) }

@@ -12,12 +12,12 @@ export default function Home() {
   const handleNewBoard = (e) => {
     e.preventDefault();
     const newBoard = { title : title, color: color, description: description };
-    const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
+    const newBoardList([...boardList, newBoard]);
     setTitle('');
     setColor("#cacaca");
     setDescription('');
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (

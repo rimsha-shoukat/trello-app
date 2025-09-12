@@ -3,21 +3,21 @@ import { useState } from 'react';
 import Board from "@/components/board";
 
 export default function Home() {
-  const [boardList, setBoardList] = useState([]);
+  const [boardList, setBoardList] = useState('');
   const [boardBox, setBoardBox] = useState(false);
   const [title, setTitle] = useState('');
-  const [color, setColor] = useState("#cacaca");
+  const [color, setColor] = useState('');
   const [description, setDescription] = useState('');
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { title : title, color: color, description: description };
-    const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
+    const newBoard = { title, color, description };
+    setBoardList([...boardList, newBoard]);
     setTitle('');
-    setColor("#cacaca");
+    setColor('');
     setDescription('');
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (

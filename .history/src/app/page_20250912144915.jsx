@@ -1,23 +1,23 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Board from "@/components/board";
 
 export default function Home() {
   const [boardList, setBoardList] = useState([]);
   const [boardBox, setBoardBox] = useState(false);
-  const [title, setTitle] = useState('');
-  const [color, setColor] = useState("#cacaca");
-  const [description, setDescription] = useState('');
+  const [title = useRef('');
+  const [color, setColor] = useRef("#cacaca");
+  const [description, setDescription] = useRef('');
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { title : title, color: color, description: description };
-    const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
-    setTitle('');
-    setColor("#cacaca");
-    setDescription('');
+    const newBoard = { title: title.current, color: color.current, description: description.current };
+    setBoardList([...boardList, newBoard]);
+    title.current = '';
+    color.current = '';
+    description.current = '';
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (

@@ -3,21 +3,14 @@ import { useState } from 'react';
 import Board from "@/components/board";
 
 export default function Home() {
-  const [boardList, setBoardList] = useState([]);
+  const [boardList, setBoardList] = useState('');
   const [boardBox, setBoardBox] = useState(false);
   const [title, setTitle] = useState('');
-  const [color, setColor] = useState("#cacaca");
+  const [color, setColor] = useState('');
   const [description, setDescription] = useState('');
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { title : title, color: color, description: description };
-    const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
-    setTitle('');
-    setColor("#cacaca");
-    setDescription('');
-    setBoardBox(false);
   }
 
   return (
@@ -33,7 +26,7 @@ export default function Home() {
           </button>
         </div>
         {boardBox && (
-          <form onSubmit={ handleNewBoard } className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#b32509] p-6 rounded-md shadow-lg">
+          <form onClick={ () => handleNewBoard } className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#b32509] p-6 rounded-md shadow-lg">
             <div className="flex flex-row items-center justify-between gap-2">
               <input
                 type="text" value={ title } onChange={ (e) => setTitle(e.target.value) }
@@ -47,7 +40,7 @@ export default function Home() {
               />
             </div>
             <textarea
-              rows="3" value={ description } onChange={ (e) => setDescription(e.target.value) }
+              rows="3" value={ description } onChange={ (e) => setDescription(e.target.value); }
               className="mt-2 w-[100%] p-2 rounded-md border-2 border-gray-800/50 focus:outline-none focus:ring-0"
               placeholder="description (optional...)"
             />
@@ -73,7 +66,7 @@ export default function Home() {
         {boardList.length === 0 ? (
           <p className="font-bold text-[1rem]">No Board created Yet!</p>
         ) : (
-          <Board boardList={ boardList } />
+          <Board />
         )}
       </div>
     </>

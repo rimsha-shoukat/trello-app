@@ -1,23 +1,23 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Board from "@/components/board";
 
 export default function Home() {
   const [boardList, setBoardList] = useState([]);
   const [boardBox, setBoardBox] = useState(false);
-  const [title, setTitle] = useState('');
-  const [color, setColor] = useState("#cacaca");
-  const [description, setDescription] = useState('');
+  const title = useRef();
+  const color = useRef();
+  const description = useRef();
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { title : title, color: color, description: description };
-    const newBoardList = [...boardList, newBoard];
-    setBoardList(newBoardList);
-    setTitle('');
-    setColor("#cacaca");
-    setDescription('');
+    const newBoard = { title: title.current.value, color: color.current.value, description: description.current.value };
+    setBoardList([...boardList, newBoard]);
+    title.current.value = '';
+    color.current.value = '';
+    description.current.value = '';
     setBoardBox(false);
+    console.log(boardList);
   }
 
   return (
@@ -36,18 +36,18 @@ export default function Home() {
           <form onSubmit={ handleNewBoard } className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#b32509] p-6 rounded-md shadow-lg">
             <div className="flex flex-row items-center justify-between gap-2">
               <input
-                type="text" value={ title } onChange={ (e) => setTitle(e.target.value) }
+                type="text" ref={title}
                 className="border-2 p-2 rounded-md w-[14rem] border-gray-800/50 focus:outline-none focus:ring-0"
                 placeholder="Enter board title" required
               />
               <input
-                type="color" value={ color } onChange={ (e) => setColor(e.target.value) }
+                type="color" ref={color} onChange={ (e) => color.current = e.target.value }
                 className="p-[0.25rem] cursor-pointer rounded-md w-10 h-10 shadow-sm hover:scale-105"
                 title="Pick a color"
               />
             </div>
             <textarea
-              rows="3" value={ description } onChange={ (e) => setDescription(e.target.value) }
+              rows="3" ref={ description } onChange={ (e) => description.current = e.target.value }
               className="mt-2 w-[100%] p-2 rounded-md border-2 border-gray-800/50 focus:outline-none focus:ring-0"
               placeholder="description (optional...)"
             />
