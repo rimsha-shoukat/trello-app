@@ -12,13 +12,13 @@ export default function Home() {
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { id: Date.now().toString(), title: title, bg: bg, text: text, lists: [] };
+    const newBoard = { id: Date.now().toString(), title, bg, text, lists: {} };
     setBoardList([...boardList, newBoard]);
     setTitle('');
     setBg("#616060");
     setText('#f5f2f2');
     setBoardBox(false);
-    localStorage.setItem('boards', JSON.stringify(boardList));
+    localStorage.setItem('boards', JSON.stringify([...boardList));
   }
 
   return (

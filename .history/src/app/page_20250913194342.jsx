@@ -12,7 +12,7 @@ export default function Home() {
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { id: Date.now().toString(), title: title, bg: bg, text: text, lists: [] };
+    const newBoard = { id: Date.now().toString(), title, bg, text, lists: {} };
     setBoardList([...boardList, newBoard]);
     setTitle('');
     setBg("#616060");
@@ -21,7 +21,6 @@ export default function Home() {
     localStorage.setItem('boards', JSON.stringify(boardList));
   }
 
-  return (
     <>
       <section className="w-[100%] flex flex-row justify-between items-center bg-[#b32509] py-[0.6rem] px-4 shadow-md select-none">
         <h1 className="text-white text-[2rem] font-bold">Trello</h1>

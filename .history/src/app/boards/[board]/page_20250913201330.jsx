@@ -30,10 +30,10 @@ export default function Boards(){
 
   const handleNewList = (e) => {
     e.preventDefault();
-    const newList = { id: Date.now().toString(), title : title, bg: bg, text: text, card : [] };
+    const newList = { id: Date.now().toString(), title : title, bg: bg, text: text, card : {} };
     const updatedBoards = boardList.map(b => {
       if (b.id === boardId) {
-        return { ...b, lists: Array.isArray(b.lists) ? [...b.lists, newList] : [newList] };
+        return { ...b, lists: [...b.lists, newList] };
       }
       return b;
     });

@@ -5,6 +5,7 @@ const BoardContext = createContext();
 
 export function BoardProvider({ children }) {
   const [boardList, setBoardList] = useState([]);
+  localstorage.setItem('boards', JSON.stringify(boardList));
 
   useEffect(() => {
     const storedBoards = JSON.parse(localStorage.getItem('boards'));
@@ -12,10 +13,6 @@ export function BoardProvider({ children }) {
       setBoardList(storedBoards);
     }
   }, []);
-
-   useEffect(() => {
-    localStorage.setItem('boards', JSON.stringify(boardList));
-  }, [boardList]);
 
   return (
     <BoardContext.Provider value={{ boardList, setBoardList }}>

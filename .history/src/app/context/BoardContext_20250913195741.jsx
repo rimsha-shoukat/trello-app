@@ -13,10 +13,6 @@ export function BoardProvider({ children }) {
     }
   }, []);
 
-   useEffect(() => {
-    localStorage.setItem('boards', JSON.stringify(boardList));
-  }, [boardList]);
-
   return (
     <BoardContext.Provider value={{ boardList, setBoardList }}>
       {children}

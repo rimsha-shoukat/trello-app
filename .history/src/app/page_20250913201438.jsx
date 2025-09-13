@@ -12,7 +12,7 @@ export default function Home() {
 
   const handleNewBoard = (e) => {
     e.preventDefault();
-    const newBoard = { id: Date.now().toString(), title: title, bg: bg, text: text, lists: [] };
+    const newBoard = { id: Date.now().toString(), title: title, bg, text, lists: [] };
     setBoardList([...boardList, newBoard]);
     setTitle('');
     setBg("#616060");
