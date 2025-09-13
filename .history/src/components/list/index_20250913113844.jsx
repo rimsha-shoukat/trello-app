@@ -1,0 +1,30 @@
+import Card from "../card";
+
+export default function List({ listBox }){
+    return(
+        <>
+        <div style={{
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                }}
+                    className="mt-4 w-[100%] h-auto grid grid-flow-col grid-rows-2 gap-8 items-start justify-start overflow-x-auto overflow-y-hidden px-[2rem] ">
+                    {
+                        boardList.map((list) => {
+                            return (
+                                <Link key={list.id} href={`/boards`}>
+                                    <div style={{ backgroundColor: list.bg }} className={`w-[20rem] h-[12rem] p-4 border-none flex items-center justify-center overflow-hidden rounded-md shadow-md`}>
+                                        <h1 style={{ color: list.text }} className="text-[2rem] leading-7">{list.title}</h1>
+                                    </div>
+                                </Link>
+                            );
+                        })
+                    }
+                </div>
+        <section>
+            <h1 className="mt-6 text-[3rem] font-bold text-[#b32509]">Board Name</h1>
+            
+            <Card/>
+        </section>
+        </>
+    )
+}
