@@ -97,12 +97,12 @@ const handleNewCard = (e) => {
               <textarea type="text" rows='3' value={card} onChange={(e) => setCard(e.target.value)} placeholder="Enter card details..." className="w-[12rem] border-2 border-gray-800/50 focus:outline-none focus:ring-0" />
               <div className="flex flex-row w-[100%] items-center justify-between mt-2">
               <input
-                type="color" value={cardBg} onChange={(e) => setCardBg(e.target.value)}
+                type="color" value={bg} onChange={(e) => setBg(e.target.value)}
                 className="p-[0.25rem] cursor-pointer rounded-md w-20 h-10 shadow-sm hover:scale-105"
                 title="Pick a background color"
               />
               <input
-                type="color" value={cardColor} onChange={(e) => setCardColor(e.target.value)}
+                type="color" value={text} onChange={(e) => setText(e.target.value)}
                 className="p-[0.25rem] cursor-pointer rounded-md w-20 h-10 shadow-sm hover:scale-105"
                 title="Pick a text color"
               />

@@ -102,7 +102,7 @@ const handleNewCard = (e) => {
                 title="Pick a background color"
               />
               <input
-                type="color" value={cardColor} onChange={(e) => setCardColor(e.target.value)}
+                type="color" value={card} onChange={(e) => setCardText(e.target.value)}
                 className="p-[0.25rem] cursor-pointer rounded-md w-20 h-10 shadow-sm hover:scale-105"
                 title="Pick a text color"
               />

@@ -43,9 +43,14 @@ export default function Boards() {
     setListBox(false);
   }
 
-const handleNewCard = (e) => {
-  e.preventDefault();
-}
+// const addNewCard = (listId) => {
+//   const newCard = { id: Date.now().toString(), title: '', description: ''};
+//   const updatedBoards = board.lists.map(list => {
+//     if (list.id === listId) {
+//       return { ...list, card: Array.isArray(list.card) ? [...list.card, newCard] : [newCard] };
+//     }
+//   });
+// }
 
   return (
     <>
@@ -92,21 +97,9 @@ const handleNewCard = (e) => {
 
         {
           newCard && (
-            <form onSubmit={handleNewCard} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#b32509] p-6 rounded-md shadow-lg">
+            <form onSubmit={AddNewCard} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#b32509] p-6 rounded-md shadow-lg">
               <h1 className="text-[1.2rem] font-semibold">Add new card</h1>
-              <textarea type="text" rows='3' value={card} onChange={(e) => setCard(e.target.value)} placeholder="Enter card details..." className="w-[12rem] border-2 border-gray-800/50 focus:outline-none focus:ring-0" />
-              <div className="flex flex-row w-[100%] items-center justify-between mt-2">
-              <input
-                type="color" value={cardBg} onChange={(e) => setCardBg(e.target.value)}
-                className="p-[0.25rem] cursor-pointer rounded-md w-20 h-10 shadow-sm hover:scale-105"
-                title="Pick a background color"
-              />
-              <input
-                type="color" value={cardColor} onChange={(e) => setCardColor(e.target.value)}
-                className="p-[0.25rem] cursor-pointer rounded-md w-20 h-10 shadow-sm hover:scale-105"
-                title="Pick a text color"
-              />
-            </div>
+              <textarea type="text" rows='3' placeholder="Enter card details..." className="w-[12rem] border-2 border-gray-800/50 focus:outline-none focus:ring-0" />
               <div className="flex flex-row w-[100%] items-center justify-between mt-2">
                 <button
                 onClick={() => setNewCard(false)}
