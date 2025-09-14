@@ -21,10 +21,6 @@ export default function Boards() {
   const [title, setTitle] = useState('');
   const [bg, setBg] = useState('#616060');
   const [text, setText] = useState('#f5f2f2');
-  const [newCard, setNewCard] = useState(false);
-  const [card, setCard] = useState('');
-  const [cardBg, setCardBg] = useState('');
-  const [cardColor, setCardColor] = useState('');
 
   const handleNewList = (e) => {
     e.preventDefault();
@@ -43,14 +39,14 @@ export default function Boards() {
     setListBox(false);
   }
 
-// const addNewCard = (listId) => {
-//   const newCard = { id: Date.now().toString(), title: '', description: ''};
-//   const updatedBoards = board.lists.map(list => {
-//     if (list.id === listId) {
-//       return { ...list, card: Array.isArray(list.card) ? [...list.card, newCard] : [newCard] };
-//     }
-//   });
-// }
+const addNewCard = (listId) => {
+  const newCard = { id: Date.now().toString(), title: '', description: ''};
+  const updatedBoards = board.lists.map(list => {
+    if (list.id === listId) {
+      return { ...list, card: Array.isArray(list.card) ? [...list.card, newCard] : [newCard] };
+    }
+  });
+}
 
   return (
     <>
@@ -94,29 +90,6 @@ export default function Boards() {
             </div>
           </form>
         )}
-
-        {
-          newCard && (
-            <form className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#b32509] p-6 rounded-md shadow-lg">
-              <h1 className="text-[1.2rem] font-semibold">Add new card</h1>
-              <textarea type="text" rows='3' placeholder="Enter card details..." className="w-[12rem] border-2 border-gray-800/50 focus:outline-none focus:ring-0" />
-              <div className="flex flex-row w-[100%] items-center justify-between mt-2">
-                <button
-                onClick={() => setNewCard(false)}
-                className="px-4 py-[0.35rem] bg-[#b32509] hover:shadow-sm hover:scale-95 hover:shadow-gray-300 rounded-md cursor-pointer font-semibold shadow-sm transition-all duration-300"
-              >
-                Cancel
-              </button>
-              <button type="submit"
-                className="px-4 py-[0.35rem] bg-[#b32509] hover:shadow-sm hover:scale-105 hover:shadow-gray-300 rounded-md cursor-pointer font-semibold text-white shadow-md transition-all duration-300"
-              >
-                Create
-              </button>
-              </div>
-            </form>
-          )
-        }
-
       </section>
       <section
         className="mt-6 w-[100%] h-auto">
@@ -135,7 +108,7 @@ export default function Boards() {
                 <div key={list.id} style={{ backgroundColor: list.bg }} className={`w-[24rem] h-auto p-4 border-none flex flex-col items-center justify-center overflow-hidden rounded-md shadow-md`}>
                   <h1 style={{ color: list.text }} className="text-[1.2rem] leading-7 mb-2">{list.title}</h1>
                   {list.card && Array.isArray(list.card) && list.card.length > 0 && <Card cards={list.card} />}
-                  <button onClick={ setNewCard(!newCard) } className="w-[100%] hover:scale-105 rounded-md cursor-pointer font-semibold text-[#b32509] py-[0.3rem] bg-gray-400 hover:bg-gray-300/60 shadow-md transition-all duration-300">+ card</button>
+                  <button onClick={ () => newCard(list.id) } className="w-[100%] hover:scale-105 rounded-md cursor-pointer font-semibold text-[#b32509] py-[0.3rem] bg-gray-400 hover:bg-gray-300/60 shadow-md transition-all duration-300">+ card</button>
                 </div>
               ))
               }
