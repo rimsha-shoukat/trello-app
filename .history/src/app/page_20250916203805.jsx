@@ -12,9 +12,7 @@ export default function Home() {
     setBoardList(JSON.parse(storedBoards));
   }, []);
 
-  useEffect(()=> {
-    localStorage.clear();
-  })
+  
 
   return (
     <>

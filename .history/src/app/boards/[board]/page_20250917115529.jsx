@@ -9,10 +9,10 @@ import CardDialogBox from '@/components/cardDialogBox';
 export default function Boards() {
   const [boardList, setBoardList] = useState([]);
 
-// useEffect(() => {
-//   const storedBoards = localStorage.getItem('boards') || '[]';
-//   setBoardList(JSON.parse(storedBoards));
-// }, []);
+useEffect(() => {
+  const storedBoards = localStorage.getItem('boards') || '[]';
+  setBoardList(JSON.parse(storedBoards));
+}, []);
     
 useEffect(() => {
   console.log(boardList);

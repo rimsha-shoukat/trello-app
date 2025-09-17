@@ -9,7 +9,7 @@ export default function cardDialogBox({ newCard, setNewCard, board, activeList, 
 
     const handleNewCard = (e) => {
         e.preventDefault();
-        const newCard = { id: Date.now().toString(), description: description, bg: bg, text: text, check: false };
+        const newCard = { id: Date.now().toString(), description: description, bg: bg, text: text, checked: false };
 
         const updatedLists = board?.lists?.map(l => {
             if (l.id === currentList.id) {

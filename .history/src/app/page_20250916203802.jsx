@@ -11,10 +11,7 @@ export default function Home() {
     const storedBoards = localStorage.getItem('boards') || '[]';
     setBoardList(JSON.parse(storedBoards));
   }, []);
-
-  useEffect(()=> {
-    localStorage.clear();
-  })
+  
 
   return (
     <>

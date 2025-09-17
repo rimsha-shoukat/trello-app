@@ -13,7 +13,7 @@ export default function Home() {
   }, []);
 
   useEffect(()=> {
-    localStorage.clear();
+    localStorage.
   })
 
   return (

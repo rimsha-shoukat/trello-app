@@ -11,8 +11,8 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
         });
 
          const updatedLists = board?.lists?.map(l => {
-            if (l.id === activeList) {
-                return { ...l, cards: updatedCards };
+            if (b.lists && b.lists.some(l => l.id === l.id)) {
+                return { ...b, lists: updatedLists };
             }
             return l;
         });
@@ -23,8 +23,8 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
             }
             return b;
         });
-        localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
+
+        localStorage.setItem('cards', JSON.stringify(updatedBoards));
     }
 
     return (

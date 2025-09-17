@@ -23,8 +23,8 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
             }
             return b;
         });
-        localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
+
+        localStorage.setItem('cards', JSON.stringify(updatedBoards));
     }
 
     return (

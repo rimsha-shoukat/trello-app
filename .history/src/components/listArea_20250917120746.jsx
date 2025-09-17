@@ -22,7 +22,7 @@ export default function listArea({ board, newCard, setNewCard, setActiveList }) 
                             {list && Array.isArray(list) && list.map(l => (
                                 <div key={l.id} style={{ backgroundColor: l.bg }} className={`w-[24rem] h-auto p-4 border-none flex flex-col gap-4 items-center justify-center overflow-hidden rounded-md shadow-md`}>
                                     <h1 style={{ color: l.text }} className="text-[1.2rem] leading-7">{l.title}</h1>
-                                        {l.cards && Array.isArray(l.cards) && l.cards.length > 0 && <CardArea cards={l.cards} board={board} activeList={l.id} boardList={list} setBoardList={setBoardList} /> }
+                                        {l.cards && Array.isArray(l.cards) && l.cards.length > 0 && <CardArea cards={l.cards} board={board} activeList={l.id} boardList={list} setBoardList={setBoardList} />}
                                     <button onClick={() => {setNewCard(!newCard); setActiveList(l.id);} } className="w-[100%] hover:scale-105 rounded-md cursor-pointer font-semibold text-[#333231] py-[0.3rem] bg-gray-400 hover:bg-gray-300/60 shadow-md transition-all duration-300">+ card</button>
                                 </div>
                             ))
