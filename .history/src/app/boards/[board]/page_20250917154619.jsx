@@ -14,6 +14,7 @@ useEffect(() => {
   setBoardList(JSON.parse(storedBoards));
 }, []);
 
+
   const params = useParams();
   const boardId = params.board;
   const board = boardList.find(b => b.id === boardId);

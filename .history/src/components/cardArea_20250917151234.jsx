@@ -1,11 +1,11 @@
 'use client';
 
-export default function cardArea ({ cards, board, activeList, boardList, setBoardList }) {
+export default function cardArea ({ cards, board, activeList, boardList }) {
 
     const handleCheck = (Id) => {
         const updatedCards = cards.map(card => {
             if (card.id === Id) {
-                return { ...card, check: !card.check };
+                return { ...card, check: ! };
             }
             return card;
         });
@@ -18,13 +18,13 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
         });
 
         const updatedBoards = boardList.map(b => {
-            if (b.id === board.id) {
+            if (b.lists && b.lists.some(l => l.id === activeList.id)) {
                 return { ...b, lists: updatedLists };
             }
             return b;
         });
         localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
+        console.log(updatedBoards);
     }
 
     return (

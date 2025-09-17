@@ -13,6 +13,10 @@ useEffect(() => {
   const storedBoards = localStorage.getItem('boards') || '[]';
   setBoardList(JSON.parse(storedBoards));
 }, []);
+    
+useEffect(() => {
+  console.log(boardList);
+}, [boardList]);
 
   const params = useParams();
   const boardId = params.board;

@@ -1,11 +1,12 @@
 'use client';
+import { useEffect } from 'react';
 
 export default function cardArea ({ cards, board, activeList, boardList, setBoardList }) {
 
     const handleCheck = (Id) => {
         const updatedCards = cards.map(card => {
             if (card.id === Id) {
-                return { ...card, check: !card.check };
+                return { ...card, check:  };
             }
             return card;
         });
@@ -18,7 +19,7 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
         });
 
         const updatedBoards = boardList.map(b => {
-            if (b.id === board.id) {
+            if (b.lists && b.lists.some(l => l.id === currentList.id)) {
                 return { ...b, lists: updatedLists };
             }
             return b;
@@ -31,7 +32,7 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
         <>
             {cards && Array.isArray(cards) && cards.map((card) => (
                     <section key={card.id} style={{backgroundColor: card.bg}} className="w-[100%] flex flex-row items-s justify-start gap-2 h-auto p-2 border-0 rounded-md shadow-md">
-                        <input checked={card.check} onChange={() => handleCheck(card.id)} type="checkbox" className="cursor-pointer" />
+                        <input checked={card.check} onClick={() => handleCheck(card.id)} type="checkbox" className="cursor-pointer" />
                         <h1 style={{color: card.text}} className="text-[1rem] text-justify leading-6">{card.description}</h1>
                     </section>
                 ))

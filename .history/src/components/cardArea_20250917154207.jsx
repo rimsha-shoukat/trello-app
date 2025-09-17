@@ -25,6 +25,7 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
         });
         localStorage.setItem('boards', JSON.stringify(updatedBoards));
         setBoardList(updatedBoards);
+        console.log(updatedBoards);
     }
 
     return (
