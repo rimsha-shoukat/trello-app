@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CiEdit } from "react-icons/ci";
-import { MdOutlineDelete } from "react-icons/md";
+import { AiOutlineDelete } from "react-icons/ai";
 
 export default function BoxArea({ boardList, setBoardList }) {
 
@@ -38,7 +38,8 @@ export default function BoxArea({ boardList, setBoardList }) {
             <div key={board.id} className="relative w-[20rem] h-[12rem]">
               <div className="absolute top-2 right-2 flex flex-row gap-2">
               <CiEdit style={{ color: board.text }} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
-              <MdOutlineDelete style={{ color: board.text }} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
+              <CiEdit style={{ color: board.text }} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
+
               </div>
               <Link key={board.id} href={`/boards/${board.id}`}>
                 <div style={{ backgroundColor: board.bg }} className={`w-[20rem] h-[12rem] p-4 border-none flex items-center justify-center overflow-hidden rounded-md shadow-md`}>

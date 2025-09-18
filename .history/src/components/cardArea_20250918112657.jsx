@@ -1,6 +1,6 @@
 'use client';
 import { CiEdit } from "react-icons/ci";
-import { MdOutlineDelete } from "react-icons/md";
+import { AiOutlineDelete } from "react-icons/ai";
 
 export default function cardArea ({ cards, board, activeList, boardList, setBoardList }) {
 
@@ -35,7 +35,7 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
                <div key={card.id} className="relative w-[100%]">
                 <div className="absolute top-2 right-2 flex flex-row gap-2">
                  <CiEdit style={{ color: card.text }} className="hover:scale-105 text-[1.5rem] cursor-pointer transition-opacity duration-300"/>
-                 <MdOutlineDelete style={{ color: card.text }} className="hover:scale-105 text-[1.5rem] cursor-pointer transition-opacity duration-300"/>
+                 <AiOutlineDelete style={{ color: card.text }} className="hover:scale-105 text-[1.5rem] cursor-pointer transition-opacity duration-300"/>
                  </div>
                     <section key={card.id} style={{backgroundColor: card.bg}} className="w-[100%] flex flex-row items-s justify-start gap-2 h-auto p-2 border-0 rounded-md shadow-md">
                         <input checked={card.check} onChange={() => handleCheck(card.id)} type="checkbox" className="cursor-pointer" />
