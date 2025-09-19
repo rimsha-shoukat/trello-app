@@ -5,17 +5,7 @@ import { MdOutlineDelete } from "react-icons/md";
 
 export default function listArea({ board, newCard, setNewCard, setActiveList, boardList, setBoardList }) {
     const list = board?.lists;
-
-    const Updates = (updatedList) => {
-        const updatedBoards = boardList.map(b => {
-            if (b.id === board.id) {
-                return { ...b, lists: updatedList };
-            }
-            return b;
-        });
-        localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
-    }
+    
 
     const deleteList = (Id) => {
         const updatedList = list.map(l => {

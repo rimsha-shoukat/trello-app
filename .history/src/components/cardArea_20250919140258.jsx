@@ -29,7 +29,8 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
             }
             return card;
         });
-        Updates(updatedCards);
+
+        
     }
 
     const deleteCard = (Id) => {
@@ -38,7 +39,6 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
                 return card;
             }
         });
-        Updates(updatedCards.filter(card => card !== undefined));
     }
 
     return (

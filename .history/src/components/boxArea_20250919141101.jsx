@@ -22,18 +22,13 @@ export default function BoxArea({ boardList, setBoardList }) {
     setBoardList(JSON.parse(storedBoards));
   }, []);
 
-   const Updates = (updatedBoards) => {
-        localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
-    }
-
-   const deleteBoard = (Id) => {
+   const deleteList = (Id) => {
         const updatedBoards = boardList.map(b => {
             if (b.id !== Id) {
                 return b;
             }
         });
-        Updates(updatedBoards.filter(b => b !== undefined));
+        Updates(board.filter(l => l !== undefined));
     }
 
   return (

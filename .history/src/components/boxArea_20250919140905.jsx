@@ -22,20 +22,6 @@ export default function BoxArea({ boardList, setBoardList }) {
     setBoardList(JSON.parse(storedBoards));
   }, []);
 
-   const Updates = (updatedBoards) => {
-        localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
-    }
-
-   const deleteBoard = (Id) => {
-        const updatedBoards = boardList.map(b => {
-            if (b.id !== Id) {
-                return b;
-            }
-        });
-        Updates(updatedBoards.filter(b => b !== undefined));
-    }
-
   return (
     <section className="select-none text-[#333231] w-[100%] h-[100%] flex flex-col items-center justify-center mt-6">
       <h1 className={`${greeting ? 'block' : 'hidden'} font-bold text-[3rem]`}>Welcome to Trello!</h1>
@@ -52,7 +38,7 @@ export default function BoxArea({ boardList, setBoardList }) {
             <div key={board.id} className="relative w-[20rem] h-[12rem]">
               <div className="absolute top-2 right-2 flex flex-row gap-2">
               <CiEdit style={{ color: board.text }} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
-              <MdOutlineDelete style={{ color: board.text }} onClick={() => deleteBoard(board.id)} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
+              <MdOutlineDelete style={{ color: board.text }}  className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
               </div>
               <Link key={board.id} href={`/boards/${board.id}`}>
                 <div style={{ backgroundColor: board.bg }} className={`w-[20rem] h-[12rem] p-4 border-none flex items-center justify-center overflow-hidden rounded-md shadow-md`}>

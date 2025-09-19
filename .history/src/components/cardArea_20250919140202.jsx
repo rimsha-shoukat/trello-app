@@ -4,8 +4,7 @@ import { MdOutlineDelete } from "react-icons/md";
 
 export default function cardArea ({ cards, board, activeList, boardList, setBoardList }) {
 
-    const Updates = (updatedCards) => {
-         const updatedLists = board?.lists?.map(l => {
+     const updatedLists = board?.lists?.map(l => {
             if (l.id === activeList) {
                 return { ...l, cards: updatedCards };
             }
@@ -20,7 +19,6 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
         });
         localStorage.setItem('boards', JSON.stringify(updatedBoards));
         setBoardList(updatedBoards);
-    }
 
     const handleCheck = (Id) => {
         const updatedCards = cards.map(card => {
@@ -29,7 +27,8 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
             }
             return card;
         });
-        Updates(updatedCards);
+
+        
     }
 
     const deleteCard = (Id) => {
@@ -38,7 +37,6 @@ export default function cardArea ({ cards, board, activeList, boardList, setBoar
                 return card;
             }
         });
-        Updates(updatedCards.filter(card => card !== undefined));
     }
 
     return (

@@ -6,26 +6,6 @@ import { MdOutlineDelete } from "react-icons/md";
 export default function listArea({ board, newCard, setNewCard, setActiveList, boardList, setBoardList }) {
     const list = board?.lists;
 
-    const Updates = (updatedList) => {
-        const updatedBoards = boardList.map(b => {
-            if (b.id === board.id) {
-                return { ...b, lists: updatedList };
-            }
-            return b;
-        });
-        localStorage.setItem('boards', JSON.stringify(updatedBoards));
-        setBoardList(updatedBoards);
-    }
-
-    const deleteList = (Id) => {
-        const updatedList = list.map(l => {
-            if (l.id !== Id) {
-                return l;
-            }
-        });
-        Updates(updatedList.filter(l => l !== undefined));
-    }
-
     return (
         <>
             <section
@@ -45,7 +25,7 @@ export default function listArea({ board, newCard, setNewCard, setActiveList, bo
                             <div key={l.id} className="relative w-[20rem] h-auto">
                                 <div className="absolute top-2 right-2 flex flex-row gap-2">
                                 <CiEdit style={{ color: l.text }} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300" />
-                                <MdOutlineDelete style={{ color: l.text }} onClick={() => deleteList(l.id)} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
+                                <MdOutlineDelete style={{ color: l.text }} onClick={deleteList} className="text-[1.5rem] hover:scale-105 cursor-pointer transition-opacity duration-300"/>
                                 </div>
                                 <div key={l.id} style={{ backgroundColor: l.bg }} className={`w-[100%] h-auto p-4 border-none flex flex-col gap-4 items-center justify-center overflow-hidden rounded-md shadow-md`}>
                                     <h1 style={{ color: l.text }} className="text-[1.2rem] leading-7">{l.title}</h1>

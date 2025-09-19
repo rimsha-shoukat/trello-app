@@ -7,9 +7,16 @@ export default function listArea({ board, newCard, setNewCard, setActiveList, bo
     const list = board?.lists;
 
     const Updates = (updatedList) => {
+         const updatedList = board?.lists?.map(l => {
+            if (l.id === activeList) {
+                return { ...l, cards: updatedList };
+            }
+            return l;
+        });
+
         const updatedBoards = boardList.map(b => {
             if (b.id === board.id) {
-                return { ...b, lists: updatedList };
+                return { ...b, lists: updatedLists };
             }
             return b;
         });
