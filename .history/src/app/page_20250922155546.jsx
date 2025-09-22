@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import MainHeader from '@/components/mainHeader';
 import BoxArea from '@/components/boxArea';
-const BoxDialogBox = dynamic(() => import('@/components/boxDialogBox'), { loading: () => <p>Loading...</p>, ssr: false });
+const BoxDialogBox = dynamic(() => import('@/components/boxDialogBox'), {  ssr: false });
 
 export default function Home() {
   const [boardBox, setBoardBox] = useState(false);
