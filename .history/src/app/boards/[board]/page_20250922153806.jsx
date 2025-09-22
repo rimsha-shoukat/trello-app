@@ -2,10 +2,11 @@
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import ListArea from '@/components/listArea';
+import CardDialogBox from '@/components/cardDialogBox';
 import BoardHeader from '@/components/boardHeader';
-const ListDialogBox = dynamic(() => import('@/components/listDialogBox'), { ssr: false });
-const CardDialogBox = dynamic(() => import('@/components/cardDialogBox'), { ssr: false });
-const ListArea = dynamic(() => import('@/components/listArea'), { ssr: false });
+con
+
 
 export default function Boards() {
   const [boardList, setBoardList] = useState([]);

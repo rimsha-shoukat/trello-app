@@ -6,6 +6,7 @@ import { VscSaveAs } from "react-icons/vsc";
 import { TbCancel } from "react-icons/tb";
  
 export default function cardArea ({ cards, board, activeList, boardList, setBoardList }) {
+
     const [editMode, setEditMode] = useState(null);
     const [updatedText, setUpdatedText] = useState({});
 

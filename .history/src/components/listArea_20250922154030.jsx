@@ -5,7 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdOutlineDelete } from "react-icons/md";
 import { VscSaveAs } from "react-icons/vsc";
 import { TbCancel } from "react-icons/tb";
-const CardArea = dynamic(() => import('@/components/cardArea'), { ssr: false });
+
 
 export default function listArea({ board, newCard, setNewCard, setActiveList, boardList, setBoardList }) {
     const list = board?.lists;

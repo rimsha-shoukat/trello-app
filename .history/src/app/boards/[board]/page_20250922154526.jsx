@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import BoardHeader from '@/components/boardHeader';
 const ListDialogBox = dynamic(() => import('@/components/listDialogBox'), { ssr: false });
 const CardDialogBox = dynamic(() => import('@/components/cardDialogBox'), { ssr: false });
-const ListArea = dynamic(() => import('@/components/listArea'), { ssr: false });
+
 
 export default function Boards() {
   const [boardList, setBoardList] = useState([]);

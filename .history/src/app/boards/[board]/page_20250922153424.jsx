@@ -1,11 +1,11 @@
 'use client';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import BoardHeader from '@/components/boardHeader';
-const ListDialogBox = dynamic(() => import('@/components/listDialogBox'), { ssr: false });
-const CardDialogBox = dynamic(() => import('@/components/cardDialogBox'), { ssr: false });
-const ListArea = dynamic(() => import('@/components/listArea'), { ssr: false });
+import ListDialogBox from '@/components/listDialogBox';
+import ListArea from '@/components/listArea';
+import CardDialogBox from '@/components/cardDialogBox';
+import Bp
 
 export default function Boards() {
   const [boardList, setBoardList] = useState([]);
@@ -25,7 +25,7 @@ useEffect(() => {
   return (
     <>
       <section className="w-[100%] flex flex-row justify-between items-center bg-[#333231] py-[0.6rem] px-4 shadow-md select-none">
-        <BoardHeader listBox={listBox} setListBox={setListBox} />
+        <BoardHeader />
         <ListDialogBox listBox={listBox} setListBox={setListBox} boardId={boardId} boardList={boardList} setBoardList={setBoardList} />
         {board && <CardDialogBox newCard={newCard} setNewCard={setNewCard} board={board} activeList={activeList} boardList={boardList} setBoardList={setBoardList} />}
       </section>
