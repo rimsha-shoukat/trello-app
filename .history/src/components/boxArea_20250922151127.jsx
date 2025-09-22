@@ -1,6 +1,5 @@
-import dynamic from 'next/dynamic';
-const BoxList = dynamic(() => import('./boxList'), { ssr: false });
-
+import { BoxList } from './boxList';  
+const Box
 export default function BoxArea({ boardList, setBoardList, greeting }) {
 
   return (

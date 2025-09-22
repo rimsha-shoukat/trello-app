@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic';
-const BoxList = dynamic(() => import('./boxList'), { ssr: false });
+import { BoxList } from './boxList';  
+const BoxList = lazy.load(() => import('./boxList'));
 
 export default function BoxArea({ boardList, setBoardList, greeting }) {
 

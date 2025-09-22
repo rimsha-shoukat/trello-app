@@ -1,9 +1,9 @@
 'use client';
-import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import MainHeader from '@/components/mainHeader';
 import BoxArea from '@/components/boxArea';
-const BoxDialogBox = dynamic(() => import('@/components/boxDialogBox'), { ssr: false });
+
+const BoxDialogBox = lazy.load(() => '@/components/boxDialogBox');
 
 export default function Home() {
   const [boardBox, setBoardBox] = useState(false);
@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const storedBoards = localStorage.getItem('boards') || '[]';
     setBoardList(JSON.parse(storedBoards));
-  }, []);
+  }, [boardList]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

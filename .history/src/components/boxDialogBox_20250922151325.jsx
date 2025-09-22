@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, u } from 'react';
 
 export default function boxDialogBox({ boardBox, setBoardBox, boardList, setBoardList }) {
     const [title, setTitle] = useState('');

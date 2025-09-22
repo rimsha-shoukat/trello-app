@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const storedBoards = localStorage.getItem('boards') || '[]';
     setBoardList(JSON.parse(storedBoards));
-  }, []);
+  }, [boardList]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

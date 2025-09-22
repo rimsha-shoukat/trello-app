@@ -1,6 +1,4 @@
-import dynamic from 'next/dynamic';
-const BoxList = dynamic(() => import('./boxList'), { ssr: false });
-
+import { BoxList } from './boxList';  
 export default function BoxArea({ boardList, setBoardList, greeting }) {
 
   return (
@@ -15,7 +13,7 @@ export default function BoxArea({ boardList, setBoardList, greeting }) {
             msOverflowStyle: 'none',
           }}
             className="mt-4 w-[100%] h-auto grid grid-flow-col grid-rows-2 gap-8 items-start justify-start overflow-x-auto overflow-y-hidden px-[2rem] ">
-            <BoxList boardList={boardList} setBoardList={setBoardList} />
+            <BoxList />
           </section>
         )}
     </section>
