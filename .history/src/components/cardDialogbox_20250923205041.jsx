@@ -46,7 +46,7 @@ export default function cardDialogBox({ newCard, setNewCard, board, activeList, 
         <form 
           onSubmit={handleNewCard} 
           onClick={(e) => e.stopPropagation()}
-          className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20 w-full max-w-md animate-in fade-in zoom-in duration-300"
+          className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20 w-full max-w-m animate-in fade-in zoom-in duration-300"
         >
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 mb-4 text-center tracking-tight">
             Add New Card
@@ -81,9 +81,9 @@ export default function cardDialogBox({ newCard, setNewCard, board, activeList, 
                 />
                 <div 
                   className="w-full h-12 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border-2 border-gray-200/50 cursor-pointer bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center"
-                  style={{ color: bg || 'gray-700' }}
+                  style={{ backgroundColor: bg }}
                 >
-                  <span className="text-sm font-medium">Current: {bg}</span>
+                  <span className="text-sm font-medium text-gray-700">Current: {bg}</span>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function cardDialogBox({ newCard, setNewCard, board, activeList, 
                 />
                 <div 
                   className="w-full h-12 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border-2 border-gray-200/50 cursor-pointer bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center"
-                  style={{ color: text || '#333' }}
+                  style={{ backgroundColor: text, color: bg || '#333' }}
                 >
                   <span className="text-sm font-medium">Current: {text}</span>
                 </div>

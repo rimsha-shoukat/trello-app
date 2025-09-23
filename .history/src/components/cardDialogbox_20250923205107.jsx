@@ -83,7 +83,7 @@ export default function cardDialogBox({ newCard, setNewCard, board, activeList, 
                   className="w-full h-12 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border-2 border-gray-200/50 cursor-pointer bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center"
                   style={{ color: bg || 'gray-700' }}
                 >
-                  <span className="text-sm font-medium">Current: {bg}</span>
+                  <span className="text-sm font-medium text-gray-700">Current: {bg}</span>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function cardDialogBox({ newCard, setNewCard, board, activeList, 
                 />
                 <div 
                   className="w-full h-12 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border-2 border-gray-200/50 cursor-pointer bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center"
-                  style={{ color: text || '#333' }}
+                  style={{ backgroundColor: text, color: bg || '#333' }}
                 >
                   <span className="text-sm font-medium">Current: {text}</span>
                 </div>
