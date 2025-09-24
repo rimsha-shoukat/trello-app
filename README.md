@@ -14,13 +14,6 @@ A modern, intuitive task management application inspired by Trello, built with N
 - **Next.js** – React framework for server-side rendering and static site generation.
 - **Tailwind CSS** – Utility-first CSS framework for rapid UI development.
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn package manager
-
 ### Installation
 
 1. Clone the repository:
