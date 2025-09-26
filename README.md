@@ -21,5 +21,6 @@ A modern, intuitive task management application inspired by Trello, built with N
    ```bash
    git clone https://github.com/rimsha-shoukat/trello-app.git
 
-2. Live demo: 
+2. Live demo:
+   ```bash
      vercel : https://trello-app-zeta-one.vercel.app/
