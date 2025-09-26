@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import BoardHeader from '@/components/boardHeader';
 const ListDialogBox = dynamic(() => import('@/components/listDialogBox'), { loading: () => <p>Loading...</p>, ssr: false });
-const CardDialogBox = dynamic(() => import('@/components/cardDialogBox'), { loading: () => <p>Loading...</p>, ssr: false });
+const CardDialogBox = dynamic(() => import('@/com ponents/cardDialogBox'), { loading: () => <p>Loading...</p>, ssr: false });
 const ListArea = dynamic(() => import('@/components/listArea'), { loading: () => <p>Loading...</p>, ssr: false });
 
 export default function Boards() {
