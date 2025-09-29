@@ -14,10 +14,14 @@ A modern, intuitive task management application inspired by Trello, built with N
 - **Next.js** – React framework for server-side rendering and static site generation.
 - **Tailwind CSS** – Utility-first CSS framework for rapid UI development.
 
-## View Live: https://trello-app-zeta-one.vercel.app/
+## View Live: https://trello-app-zeta-one.vercel.app
 
-## Clone the repository:
+### Clone the repository:
 
    ```bash
-   https://github.com/rimsha-shoukat/trello-app.git
+   git clone https://github.com/rimsha-shoukat/trello-app.git
+
+
+
+
 
