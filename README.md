@@ -20,8 +20,4 @@ A modern, intuitive task management application inspired by Trello, built with N
 
    ```bash
    git clone https://github.com/rimsha-shoukat/trello-app.git
-
-
-
-
-
+```
