@@ -21,3 +21,19 @@ A modern, intuitive task management application inspired by Trello, built with N
    ```bash
    git clone https://github.com/rimsha-shoukat/trello-app.git
 ```
+
+## 💡 Feel Free to Contribute
+
+###🚀 Additional Features You Can Work On
+
+-Store user data in a database instead of using local storage
+
+-Add a timeline for each task
+
+-Enable merging of lists
+
+-Allow swapping of cards between lists
+
+##💬 Need Help?
+
+If you have any questions, feel free to open an issue or start a discussion — we’d love to help!
