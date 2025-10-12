@@ -26,13 +26,13 @@ A modern, intuitive task management application inspired by Trello, built with N
 
 ###🚀 Additional Features You Can Work On
 
--Store user data in a database instead of using local storage
+- **Store user data in a database instead of using local storage**
 
--Add a timeline for each task
+- **Add a timeline for each task**
 
--Enable merging of lists
+- **Enable merging of lists**
 
--Allow swapping of cards between lists
+- **Allow swapping of cards between lists**
 
 ##💬 Need Help?
 
