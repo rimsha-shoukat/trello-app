@@ -14,7 +14,7 @@ A modern, intuitive task management application inspired by Trello, built with N
 - **Next.js** – React framework for server-side rendering and static site generation.
 - **Tailwind CSS** – Utility-first CSS framework for rapid UI development.
 
-## View Live: https://trello-app-zeta-one.vercel.app
+### View Live: https://trello-app-zeta-one.vercel.app
 
 ### Clone the repository:
 
@@ -24,7 +24,7 @@ A modern, intuitive task management application inspired by Trello, built with N
 
 ## 💡 Feel Free to Contribute
 
-###🚀 Additional Features You Can Work On
+### 🚀 Additional Features You Can Work On
 
 - **Store user data in a database instead of using local storage**
 
@@ -34,6 +34,6 @@ A modern, intuitive task management application inspired by Trello, built with N
 
 - **Allow swapping of cards between lists**
 
-##💬 Need Help?
+### 💬 Need Help?
 
 If you have any questions, feel free to open an issue or start a discussion — we’d love to help!
