@@ -1,9 +1,10 @@
-import { FaRegUser } from "react-icons/fa";
+import { UserStar } from "lucide-react";
+import { Button } from "@/components/ui/button"
 
 export function UserIcon(){
     return (
-        <div className="p-2 bg-gray-400 border-1 dark:text-black border-gray-500 rounded-full">
-          <FaRegUser/>
-        </div>   
+    <Button variant="outline" size="icon">         
+      <UserStar />
+    </Button>   
     )
 }

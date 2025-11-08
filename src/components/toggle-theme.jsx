@@ -1,14 +1,38 @@
-"use client";
-import { useTheme } from "next-themes";
+"use client"
+import * as React from "react"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
-export function ToggleTheme(){
-    const { setTheme } = useTheme();
+export function ToggleTheme() {
+  const { setTheme } = useTheme()
 
-    return (
-        <div className="flex flex-row items-center justify-center gap-2">
-            <h1 className="text-sm text-blue-600 mr-2">Select theme</h1>
-            <button className="px-2 py-1 border-1 border-gray-400 rounded-md font-semibold text-xs hover:scale-[1.2] hover:transition-all ease-in-out duration-300" onClick={()=> setTheme("light")} >Light</button>
-            <button className="px-2 py-1 border-1 border-gray-400 rounded-md font-semibold text-xs hover:scale-[1.2] hover:transition-all ease-in-out duration-300" onClick={()=> setTheme("dark")} >Dark</button>
-        </div>
-    )
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }

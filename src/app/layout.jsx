@@ -10,8 +10,10 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="w-[100%] h-[100%]">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem >{children}</ThemeProvider> 
+      <body className="w-[100%] h-[100%] dark:text-gray-200 text-black">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem >
+          {children} 
+        </ThemeProvider>
       </body>
     </html>
   );
