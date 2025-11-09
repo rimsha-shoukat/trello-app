@@ -1,6 +1,10 @@
+import { Search } from "lucide-react";
 
 export function SearchBar(){
     return (
-        <input className="w-[70%] h-auto px-4 py-2 rounded-lg border-none ring-1 ring-gray-600 hover:scale-[1.02] focus:border-none focus:outline-none hover:transition-all duration-500 ease-in-out" type="text" placeholder="Search"/>
+        <div className="w-[70%] flex flex-row gap-2 shadow-sm h-auto px-4 py-2 rounded-full border-1 border-gray-500/30 hover:border-gray-500/30 hover:scale-[1.02] hover:transition-all duration-500 ease-in-out">
+        <Search className="text-md text-gray-700/50 font-semibold" />
+        <input className="w-[100%] outline-none ring-none" type="text" placeholder="Search"/>
+        </div>
     );
 }
