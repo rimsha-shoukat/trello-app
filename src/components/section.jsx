@@ -1,6 +1,5 @@
-"use client"
 
-import { ChevronDown, CirclePlus, Notebook } from "lucide-react"
+import { ChevronDown, CirclePlus, Notebook, ArrowRightLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -23,8 +22,8 @@ export function Section() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[14rem] mt-2" align="end">
           <DropdownMenuItem className="p-4 flex flex-row items-center justify-start gap-2">
-            <CirclePlus />
-            <h1 className="font-semibold">Board</h1> 
+            <ArrowRightLeft />
+            <h1 className="font-semibold">Notes</h1> 
           </DropdownMenuItem>
           <DropdownMenuGroup>
             <DropdownMenuItem className="p-4">
@@ -43,6 +42,10 @@ export function Section() {
               <h1 className="font-semibold">Board name 3</h1>  
             </DropdownMenuItem>
           </DropdownMenuGroup>
+          <DropdownMenuItem className="p-4 flex flex-row items-center justify-start gap-2">
+            <CirclePlus />
+            <h1 className="font-semibold">Board</h1> 
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

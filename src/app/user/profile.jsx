@@ -38,6 +38,10 @@ export function Profile() {
                <Button variant="link">Edit</Button>
               </CardAction>
             </div>
+            <div className="grid grid-cols-3 gap-2">
+              <h1>Notes: none</h1>
+              <h1>Boards: none</h1>
+            </div>
           </div>
         </form>
       </CardContent>
