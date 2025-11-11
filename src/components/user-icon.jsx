@@ -1,8 +1,9 @@
+"use client";
 import { User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export function UserIcon() {
+export function UserIcon({loginUser, setShowProfile, setShowSignin}) {
   return (
-    <Button variant="outline"><User/></Button>
+    <Button onClick={()=>{loginUser? setShowProfile(true) : setShowSignin(true)}} variant="outline"><User/></Button>
   )
 }
