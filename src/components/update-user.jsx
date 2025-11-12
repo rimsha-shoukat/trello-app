@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -9,7 +10,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function UpdateUser() {
+export function UpdateUser({setShowUserAlert, setShowUserUpdate}) {
+
+  const handleUpdate = () => {
+    setShowUserUpdate(false);
+    setShowUserAlert(true);
+  }
+  
   return (
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
@@ -17,8 +24,8 @@ export function UpdateUser() {
       </CardHeader>
       <CardContent>
         <form>
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
+          <div className="flex flex-col gap-2 mb-4">
+            <div className="grid gap-2 mb-4">
               <Label htmlFor="email">Old Email</Label>
               <Input
                 id="email"
@@ -36,11 +43,12 @@ export function UpdateUser() {
                 required
               />
             </div>
+            <p className="underline">forgot password</p>
           </div>
         </form>
       </CardContent>
       <CardFooter>
-        <Button type="submit" className="w-full">
+        <Button onClick={ handleUpdate } type="submit" className="w-full">
           Save Changes
         </Button>
       </CardFooter>
