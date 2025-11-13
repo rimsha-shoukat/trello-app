@@ -15,7 +15,7 @@ export function Section({showList, setShowList}) {
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" aria-label="Open menu" size="lg">
+          <Button className="bg-gray-200/50 dark:bg-gray-800" variant="outline" aria-label="Open menu" size="lg">
             {showList? <h1>Boards</h1> : <h1>Notes</h1>}
             <ChevronDown />
           </Button>

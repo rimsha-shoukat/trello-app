@@ -1,9 +1,23 @@
-import { Button } from "@/components/ui/button"
-import { ChevronDown } from "lucide-react"
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, Notebook } from "lucide-react";
 
 export function Note(){
+    const[notes, setNotes] = useState([]);
+
+    if(notes.length <= 0){
+        return(
+        <div className="break-inside-avoid mb-4 flex flex-col items-center justify-center gap-4 w-[100%] h-auto">
+            <h1>No Notes Yet!</h1>
+            <p>You haven&apos;t created any notes yet. Get started by creating
+          your first note.</p>
+            <Button>Create Note</Button>
+        </div>
+        )
+    }
+    
     return (
-        <div className="break-inside-avoid mb-4 w-[100%] h-auto p-4 rounded-md border-1 border-gray-400">
+        <div className="break-inside-avoid mb-4 w-[100%] h-auto p-4 rounded-md border-1 border-gray-400 bg-gray-400 dark:bg-gray-900 shadow-sm">
             <span className="w-[100%] flex flex-row items-center justify-between mb-4">
                 <span>
                     <h1>Note Name</h1>

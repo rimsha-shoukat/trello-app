@@ -25,19 +25,18 @@ export default function Home() {
   useEffect(()=>{
   },[showList]);
 
-  // window.addEventListener("click", ()=>{
-  //   setLoginUser(false);
-  //   setShowList(false);
-  //   setShowLogin(false);
-  //   setShowSignin(false);
-  //   setShowProfile(false);
-  //   setShowUserAlert(false);
-  //   setShowUserUpdate(false);
-  // })
+  // list and note show and hide
+  // add board card
+  // add list card
+  // add card card
+  // edit / delete board - card
+  // rename / delete list - card
+  // edit / delete card - card
+  // window click hide all cards
 
   return (
     <section className="flex flex-col items-start justify-start min-w-full min-h-screen">
-    <nav className="w-[100%] h-auto flex flex-row items-start justify-between py-3 px-5 bg-gray-200/30 shadow-md dark:bg-gray-900 dark:shadow-gray-950">
+    <nav className="w-[100%] h-auto flex flex-row items-start justify-between py-3 px-5 bg-gray-300 shadow-md dark:bg-gray-900 dark:shadow-gray-950">
       <Section showList={showList} setShowList={setShowList} />
       <SearchBar />
       <div className="flex flex-row gap-4">
@@ -46,7 +45,7 @@ export default function Home() {
       </div>
     </nav>
     <main className={`${showList ? "columns-3" : "columns-2"} w-[100%] h-auto p-6 my-6`}>
-      { showList? <List /> : <Note /> }
+      { showList?  <List /> : <Note /> }
     </main>
       { showLogin && <Login setShowLogin={setShowLogin} setShowSignin={setShowSignin} setLoginUser={setLoginUser} /> }
       { showSignin && <Signin setShowSignin={setShowSignin} setShowLogin={setShowLogin} setLoginUser={setLoginUser} /> }
