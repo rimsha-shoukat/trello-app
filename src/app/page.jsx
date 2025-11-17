@@ -12,6 +12,8 @@ import { Login } from "./user/login";
 import { Signin } from "./user/signin";
 import { Profile } from "./user/profile";
 import { UpdateUser } from "@/components/update-user";
+import { AddText } from "@/components/addText";
+import { AddTitle } from "@/components/addTitle";
 
 export default function Home() {
   const [loginUser, setLoginUser] = useState(false);
@@ -21,38 +23,33 @@ export default function Home() {
   const [showProfile, setShowProfile] = useState(false);
   const [showUserAlert, setShowUserAlert] = useState(false);
   const [showUserUpdate, setShowUserUpdate] = useState(false);
+  const [addNewTitle, setAddNewTitle] = useState(false);
+  const [addNewText, setAddNewText] = useState(false);
 
   useEffect(()=>{
   },[showList]);
 
-  // list and note show and hide
-  // add board card
-  // add list card
-  // add card card
-  // edit / delete board - card
-  // rename / delete list - card
-  // edit / delete card - card
-  // window click hide all cards
-
   return (
-    <section className="flex flex-col items-start justify-start min-w-full min-h-screen">
-    <nav className="w-[100%] h-auto flex flex-row items-start justify-between py-3 px-5 bg-gray-300 shadow-md dark:bg-gray-900 dark:shadow-gray-950">
-      <Section showList={showList} setShowList={setShowList} />
-      <SearchBar />
-      <div className="flex flex-row gap-4">
-        <UserIcon loginUser={loginUser} setShowProfile={setShowProfile} setShowSignin={setShowSignin} />
-        <ToggleTheme />
-      </div>
-    </nav>
-    <main className={`${showList ? "columns-3" : "columns-2"} w-[100%] h-auto p-6 my-6`}>
-      { showList?  <List /> : <Note /> }
-    </main>
+    <section className="flex flex-col items-start justify-start min-w-full h-screen">
+      <nav className="w-[100%] h-auto flex flex-row items-start justify-between py-3 px-5 bg-[#18243c] text-white shadow-md dark:bg-gray-900 dark:shadow-gray-950">
+        <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />
+        <SearchBar />
+        <div className="flex flex-row gap-4">
+          <UserIcon loginUser={loginUser} setShowProfile={setShowProfile} setShowSignin={setShowSignin} />
+          <ToggleTheme />
+        </div>
+      </nav>
+      <main className="w-[100%] h-[100%] p-6 my-6">
+        { showList?  <List setAddNewTitle={setAddNewTitle} /> : <Note setAddNewTitle={setAddNewTitle} /> }
+      </main>
       { showLogin && <Login setShowLogin={setShowLogin} setShowSignin={setShowSignin} setLoginUser={setLoginUser} /> }
       { showSignin && <Signin setShowSignin={setShowSignin} setShowLogin={setShowLogin} setLoginUser={setLoginUser} /> }
       { showProfile && <Profile setShowUserUpdate={setShowUserUpdate} setShowProfile={setShowProfile} setShowUserAlert={setShowUserAlert} /> }
       { showUserUpdate && <UpdateUser setShowUserAlert={setShowUserAlert} setShowUserUpdate={setShowUserUpdate} /> }
       { showUserAlert && <UserAlert setShowUserAlert={setShowUserAlert} /> }
-      <Add/>
+      { addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} /> }
+      { addNewText && <AddText showList={showList} setAddNewText={setAddNewText} /> }
+      <Add setAddNewTitle={setAddNewTitle} />
     </section>
   );
 }

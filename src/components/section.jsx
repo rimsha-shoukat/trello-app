@@ -9,21 +9,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Section({showList, setShowList}) {
+export function Section({showList, setShowList, setAddNewTitle}) {
 
   return (
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button className="bg-gray-200/50 dark:bg-gray-800" variant="outline" aria-label="Open menu" size="lg">
+          <Button className="bg-[#162238] hover:bg-[#1b2a45] text-white border-1 border-gray-500 dark:bg-gray-800" aria-label="Open menu" size="lg">
             {showList? <h1>Boards</h1> : <h1>Notes</h1>}
             <ChevronDown />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[14rem] mt-2" align="end">
-          <DropdownMenuItem className="p-4 flex flex-row items-center justify-start gap-2">
+          <DropdownMenuItem onClick={() => {setShowList(!showList)}} className="p-4 flex flex-row items-center justify-start gap-2">
             <ArrowRightLeft />
-            <h1 onClick={() => {setShowList(!showList)}} className="font-semibold">{showList ? "Notes" : "Boards"}</h1>
+            <h1 className="font-semibold">{showList ? "Notes" : "Boards"}</h1>
           </DropdownMenuItem>
           <DropdownMenuGroup>
             <DropdownMenuItem className="p-4">
@@ -42,7 +42,7 @@ export function Section({showList, setShowList}) {
               <h1 className="font-semibold">{!showList ? "Note" : "Board"} name 3</h1>  
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuItem className="p-4 flex flex-row items-center justify-start gap-2">
+          <DropdownMenuItem onClick={() => {setAddNewTitle(true)}} className="p-4 flex flex-row items-center justify-start gap-2">
             <CirclePlus />
             <h1 className="font-semibold">{!showList ? "Note" : "Board"}</h1> 
           </DropdownMenuItem>

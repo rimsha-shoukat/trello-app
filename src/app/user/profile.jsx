@@ -22,6 +22,9 @@ export function Profile({setShowUserUpdate, setShowProfile, setShowUserAlert}) {
   }
 
   return (
+    <>
+    <section onClick={ () => {setShowProfile(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
         <CardTitle>User Profile</CardTitle>
@@ -66,5 +69,6 @@ export function Profile({setShowUserUpdate, setShowProfile, setShowUserAlert}) {
         </Button>
       </CardFooter>
     </Card>
+    </>
   )
 }

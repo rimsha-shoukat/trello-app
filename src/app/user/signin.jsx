@@ -19,6 +19,9 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
     setLoginUser(true);
   }
   return (
+    <>
+    <section onClick={ () => {setShowSignin(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
         <CardTitle>Create new account</CardTitle>
@@ -66,5 +69,6 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
         </Button>
       </CardFooter>
     </Card>
+    </>
   )
 }

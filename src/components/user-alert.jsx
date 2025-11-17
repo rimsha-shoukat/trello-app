@@ -19,6 +19,9 @@ export function UserAlert({setShowUserAlert}) {
   }
 
   return (
+    <>
+    <section onClick={ () => {setShowUserAlert(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
         <CardTitle>Are you absolutely sure?</CardTitle>
@@ -35,5 +38,6 @@ export function UserAlert({setShowUserAlert}) {
         </Button>
       </CardFooter>
     </Card>
+    </>
   )
 }
