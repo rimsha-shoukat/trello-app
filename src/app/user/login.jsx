@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -7,12 +8,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import React, { useState } from "react";
 
 export function Login({setShowLogin, setShowSignin, setLoginUser}) {
+  const [form, setForm] = useState({email, password});
+
   const handleLogin = () => {
+    console.log(from);
     setShowLogin(false);
     setLoginUser(true);
   }
@@ -30,15 +35,16 @@ export function Login({setShowLogin, setShowSignin, setLoginUser}) {
           <Button onClick={() => {setShowLogin(false); setShowSignin(true)}} variant="link">Sign Up</Button>
         </CardAction>
       </CardHeader>
-      <CardContent>
-        <form>
+      <form onSubmit={ handleLogin }>
+      <CardContent className="mb-4">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
+                onChange={ (e) => setForm({...form, email: e.target.value})}
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="admin@example.com"
                 required
               />
             </div>
@@ -52,19 +58,23 @@ export function Login({setShowLogin, setShowSignin, setLoginUser}) {
                   Forgot your password?
                 </a>
               </div>
-              <Input id="password" type="password" required />
+              <Input 
+              onChange={ (e) => setForm({...form, password: e.target.value}) }
+              id="password" 
+              type="password" 
+              required />
             </div>
           </div>
-        </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button onClick={ handleLogin } type="submit" className="w-full">
+        <Button type="submit" className="w-full">
           Login
         </Button>
         <Button variant="outline" className="w-full">
           Login with Google
         </Button>
       </CardFooter>
+    </form>
     </Card>
     </>
   )
