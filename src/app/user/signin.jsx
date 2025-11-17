@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -8,13 +8,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import React, { useState } from "react";
 
 export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
+  const [form, setForm] = useState({name: "", email: "", password: ""})
 
   const handleSignin = () => {
+    console.log(form);
     setShowSignin(false);
     setLoginUser(true);
   }
@@ -32,12 +35,13 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
           <Button onClick={() => {setShowLogin(true); setShowSignin(false)}} variant="link">Log In</Button>
         </CardAction>
       </CardHeader>
-      <CardContent>
-        <form>
+      <form onSubmit={ handleSignin }>
+      <CardContent className="mb-4">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Name</Label>
-              <Input
+              <Input 
+                onChange={ (e) => setForm({...form, name: e.target.value}) }
                 id="name"
                 type="name"
                 placeholder="admin"
@@ -46,7 +50,8 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input
+              <Input 
+                onChange={ (e) => setForm({...form, email: e.target.value}) }
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -55,19 +60,23 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" required />
+              <Input 
+              onChange={(e) => setForm({...form, password: e.target.value})}
+              id="password" 
+              type="password"
+              required />
             </div>
           </div>
-        </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button onClick={ handleSignin } type="submit" className="w-full">
+        <Button type="submit" className="w-full">
           SignIn
         </Button>
         <Button variant="outline" className="w-full">
           SignIn with Google
         </Button>
       </CardFooter>
+    </form>
     </Card>
     </>
   )
