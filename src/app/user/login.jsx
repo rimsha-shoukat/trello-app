@@ -12,13 +12,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
+import axios from "axios";
 
-export function Login({setShowLogin, setShowSignin, setLoginUser}) {
-  const [form, setForm] = useState({email, password});
+export function Login({setShowLogin, setShowSignup, setLoginUser}) {
+  const [user, setUser] = useState({email, password});
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
     console.log(from);
     setShowLogin(false);
+    const response = await axios.post("/api/user/login", user);
+    console.log(response);
     setLoginUser(true);
   }
   return (
@@ -32,7 +35,7 @@ export function Login({setShowLogin, setShowSignin, setLoginUser}) {
           Enter your email below to login to your account
         </CardDescription>
         <CardAction>
-          <Button onClick={() => {setShowLogin(false); setShowSignin(true)}} variant="link">Sign Up</Button>
+          <Button onClick={() => {setShowLogin(false); setShowSignup(true)}} variant="link">Sign Up</Button>
         </CardAction>
       </CardHeader>
       <form onSubmit={ handleLogin }>
@@ -41,7 +44,7 @@ export function Login({setShowLogin, setShowSignin, setLoginUser}) {
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
-                onChange={ (e) => setForm({...form, email: e.target.value})}
+                onChange={ (e) => setUser({...user, email: e.target.value})}
                 id="email"
                 type="email"
                 placeholder="admin@example.com"
@@ -59,7 +62,7 @@ export function Login({setShowLogin, setShowSignin, setLoginUser}) {
                 </a>
               </div>
               <Input 
-              onChange={ (e) => setForm({...form, password: e.target.value}) }
+              onChange={ (e) => setUser({...user, password: e.target.value}) }
               id="password" 
               type="password" 
               required />

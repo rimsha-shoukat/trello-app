@@ -33,7 +33,6 @@ export function Profile({setShowUserUpdate, setShowProfile, setShowUserAlert}) {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <h1>User name</h1>
@@ -58,7 +57,6 @@ export function Profile({setShowUserUpdate, setShowProfile, setShowUserAlert}) {
               <h1>Boards: none</h1>
             </div>
           </div>
-        </form>
       </CardContent>
       <CardFooter className="flex-row gap-2">
         <Button onClick={ handleLogout } type="submit" className="w-1/2">

@@ -12,18 +12,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
+import axios from "axios";
 
-export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
-  const [form, setForm] = useState({name: "", email: "", password: ""})
+export function Signup({setShowSignup, setShowLogin, setLoginUser}) {
+  const [user, setUser] = useState({name: "", email: "", password: ""})
 
-  const handleSignin = () => {
-    console.log(form);
-    setShowSignin(false);
+  const handleSignup = async() => {
+    console.log(user);
+    setShowSignup(false);
+    const response = await axios.post("/api/user/signup", user);
+    console.log(response);
     setLoginUser(true);
   }
   return (
     <>
-    <section onClick={ () => {setShowSignin(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    <section onClick={ () => {setShowSignup(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
     </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
@@ -32,16 +35,16 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
           Provide your name & email below to create new account
         </CardDescription>
         <CardAction>
-          <Button onClick={() => {setShowLogin(true); setShowSignin(false)}} variant="link">Log In</Button>
+          <Button onClick={() => {setShowLogin(true); setShowSignup(false)}} variant="link">Log In</Button>
         </CardAction>
       </CardHeader>
-      <form onSubmit={ handleSignin }>
+      <form onSubmit={ handleSignup }>
       <CardContent className="mb-4">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Name</Label>
               <Input 
-                onChange={ (e) => setForm({...form, name: e.target.value}) }
+                onChange={ (e) => setUser({...user, name: e.target.value}) }
                 id="name"
                 type="name"
                 placeholder="admin"
@@ -51,7 +54,7 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input 
-                onChange={ (e) => setForm({...form, email: e.target.value}) }
+                onChange={ (e) => setUser({...user, email: e.target.value}) }
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -61,7 +64,7 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <Input 
-              onChange={(e) => setForm({...form, password: e.target.value})}
+              onChange={(e) => setUser({...user, password: e.target.value})}
               id="password" 
               type="password"
               required />
@@ -70,10 +73,10 @@ export function Signin({setShowSignin, setShowLogin, setLoginUser}) {
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" className="w-full">
-          SignIn
+          SignUp
         </Button>
         <Button variant="outline" className="w-full">
-          SignIn with Google
+          SignUp with Google
         </Button>
       </CardFooter>
     </form>

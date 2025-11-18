@@ -5,11 +5,11 @@ import { SearchBar } from "@/components/search-bar";
 import { UserIcon } from "@/components/user-icon";
 import { Section } from "@/components/section";
 import { Add } from "@/components/add";
-import { List } from "./lists/list";
+import { List } from "./[boards]/lists/list";
 import { Note } from "./notes/note";
 import { UserAlert } from "@/components/user-alert";
 import { Login } from "./user/login";
-import { Signin } from "./user/signin";
+import { Signup } from "./user/signup";
 import { Profile } from "./user/profile";
 import { UpdateUser } from "@/components/update-user";
 import { AddText } from "@/components/addText";
@@ -19,7 +19,7 @@ export default function Home() {
   const [loginUser, setLoginUser] = useState(false);
   const [showList, setShowList] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [showSignin, setShowSignin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showUserAlert, setShowUserAlert] = useState(false);
   const [showUserUpdate, setShowUserUpdate] = useState(false);
@@ -35,15 +35,15 @@ export default function Home() {
         <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />
         <SearchBar />
         <div className="flex flex-row gap-4">
-          <UserIcon loginUser={loginUser} setShowProfile={setShowProfile} setShowSignin={setShowSignin} />
+          <UserIcon loginUser={loginUser} setShowProfile={setShowProfile} setShowSignup={setShowSignup} />
           <ToggleTheme />
         </div>
       </nav>
       <main className="w-[100%] h-[100%] p-6 my-6">
         { showList?  <List setAddNewTitle={setAddNewTitle} /> : <Note setAddNewTitle={setAddNewTitle} /> }
       </main>
-      { showLogin && <Login setShowLogin={setShowLogin} setShowSignin={setShowSignin} setLoginUser={setLoginUser} /> }
-      { showSignin && <Signin setShowSignin={setShowSignin} setShowLogin={setShowLogin} setLoginUser={setLoginUser} /> }
+      { showLogin && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} setLoginUser={setLoginUser} /> }
+      { showSignup && <Signup setShowSignup={setShowSignup} setShowLogin={setShowLogin} setLoginUser={setLoginUser} /> }
       { showProfile && <Profile setShowUserUpdate={setShowUserUpdate} setShowProfile={setShowProfile} setShowUserAlert={setShowUserAlert} /> }
       { showUserUpdate && <UpdateUser setShowUserAlert={setShowUserAlert} setShowUserUpdate={setShowUserUpdate} /> }
       { showUserAlert && <UserAlert setShowUserAlert={setShowUserAlert} /> }
