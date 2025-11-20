@@ -43,7 +43,7 @@ export default function Home() {
         { showList?  <List setAddNewTitle={setAddNewTitle} /> : <Note setAddNewTitle={setAddNewTitle} /> }
       </main>
       { showLogin && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} setLoginUser={setLoginUser} /> }
-      { showSignup && <Signup setShowSignup={setShowSignup} setShowLogin={setShowLogin} setLoginUser={setLoginUser} /> }
+      { showSignup && <Signup setShowSignup={setShowSignup} setShowLogin={setShowLogin} /> }
       { showProfile && <Profile setShowUserUpdate={setShowUserUpdate} setShowProfile={setShowProfile} setShowUserAlert={setShowUserAlert} /> }
       { showUserUpdate && <UpdateUser setShowUserAlert={setShowUserAlert} setShowUserUpdate={setShowUserUpdate} /> }
       { showUserAlert && <UserAlert setShowUserAlert={setShowUserAlert} /> }

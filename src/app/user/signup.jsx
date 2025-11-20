@@ -13,16 +13,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
-export function Signup({setShowSignup, setShowLogin, setLoginUser}) {
+export function Signup({setShowSignup, setShowLogin}) {
   const [user, setUser] = useState({name: "", email: "", password: ""})
 
   const handleSignup = async() => {
-    console.log(user);
     setShowSignup(false);
     const response = await axios.post("/api/user/signup", user);
     console.log(response);
-    setLoginUser(true);
+    toast.success("User created successfully!!");
+    setShowLogin(true);
   }
   return (
     <>

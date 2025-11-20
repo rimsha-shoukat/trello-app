@@ -5,4 +5,4 @@ const noteSchema = new mongoose.Schema({
     text: {type: String, default: "Note contain no text"}
 },{timestamps: true});
 
-export const Note = mongoose.model.notes || mongoose.model("Note", noteSchema);
+export const Note = mongoose.models.Note || mongoose.model("Note", noteSchema);

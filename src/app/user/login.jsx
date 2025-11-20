@@ -15,13 +15,12 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export function Login({setShowLogin, setShowSignup, setLoginUser}) {
-  const [user, setUser] = useState({email, password});
+  const [user, setUser] = useState({name: "", email: "", password: ""});
 
   const handleLogin = async() => {
-    console.log(from);
     setShowLogin(false);
-    const response = await axios.post("/api/user/login", user);
-    console.log(response);
+    // const response = await axios.post("/api/user/login", user);
+    // console.log(response);
     setLoginUser(true);
   }
   return (
