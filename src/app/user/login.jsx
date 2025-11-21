@@ -11,17 +11,39 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast"
 
 export function Login({setShowLogin, setShowSignup, setLoginUser}) {
-  const [user, setUser] = useState({name: "", email: "", password: ""});
+  const[user, setUser] = useState({nameOrEmail: "", password: ""});
+  const[res, setRes] = useState({show: false, error:false, message:""});
+
+  useEffect(() => {
+    setRes({show:false, error:false, message:""});
+  },[user]);
 
   const handleLogin = async() => {
-    setShowLogin(false);
-    // const response = await axios.post("/api/user/login", user);
-    // console.log(response);
-    setLoginUser(true);
+    try {
+      const response = await axios.post("/api/user/login", user);
+      console.log(response);
+      const successData = response.data;
+      setRes({show: true, error: false, message: successData});
+      toast.success("User logged in successfully!!");
+      setShowLogin(false);
+      setLoginUser(true);
+    } catch (error) {
+      let errorMessage = "An unknown error occurred!!";
+      if(error.response){
+        errorMessage = error.response.data.message || error.response.data || errorMessage;
+      }else if(error.request){
+        errorMessage = "Network Error!! please check your internet connection.";
+      }else{
+        errorMessage = error.message;
+      }
+      setRes({ show: true, error: true, message: errorMessage });
+      toast.error(errorMessage);
+    }
   }
   return (
     <>
@@ -37,16 +59,16 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
           <Button onClick={() => {setShowLogin(false); setShowSignup(true)}} variant="link">Sign Up</Button>
         </CardAction>
       </CardHeader>
-      <form onSubmit={ handleLogin }>
+      <form onSubmit={ (e) => handleLogin(e) }>
       <CardContent className="mb-4">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Name OR Email</Label>
               <Input
-                onChange={ (e) => setUser({...user, email: e.target.value})}
-                id="email"
+                onChange={ (e) => setUser({...user, nameOrEmail: e.target.value})}
+                id="nameOrEmail"
                 type="email"
-                placeholder="admin@example.com"
+                placeholder="Name || Email"
                 required
               />
             </div>
@@ -67,6 +89,7 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
               required />
             </div>
           </div>
+          { res.show && <p className={`text-sm ${res.error? "text-red-800": "text-green-800"}`}>{res.message}</p>}
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" className="w-full">

@@ -23,7 +23,8 @@ export function Signup({setShowSignup, setShowLogin}) {
     setRes({show: false, error: false, message:""});
   },[user]);
 
-  const handleSignup = async() => {
+  const handleSignup = async(e) => {
+    e.preventDefault();
     if(user.password.length < 8){
       setRes({show: true, error: true, message:"Password must be atleast 8 characters long!!"});
       return;
@@ -32,7 +33,6 @@ export function Signup({setShowSignup, setShowLogin}) {
     try {
       const response = await axios.post("/api/user/signup", user);
       console.log(response);
-
       const successData = response.data;
       setRes({show: true, error: false, message: successData});
       toast.success("User created successfully!!");
@@ -66,7 +66,7 @@ export function Signup({setShowSignup, setShowLogin}) {
           <Button onClick={() => {setShowLogin(true); setShowSignup(false)}} variant="link">Log In</Button>
         </CardAction>
       </CardHeader>
-      <form onSubmit={ handleSignup }>
+      <form onSubmit={ (e) => handleSignup(e) }>
       <CardContent className="mb-4">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
