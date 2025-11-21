@@ -14,6 +14,10 @@ export async function POST(request) {
             return NextResponse.json({error: "Missing fields required!!"}, {status: 400});
         }
 
+        if(password.length < 8){
+            return NextResponse.json({message: "Password must be 8 characters long!!"}, {status : 400})
+        }
+
         const user = await User.findOne({email});
         if(user){
             return NextResponse.json({error: "User already exists!!"}, {status: 409});

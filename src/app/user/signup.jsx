@@ -11,20 +11,47 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
 export function Signup({setShowSignup, setShowLogin}) {
-  const [user, setUser] = useState({name: "", email: "", password: ""})
+  const[user, setUser] = useState({name: "", email: "", password: ""});
+  const[res, setRes] = useState({show: false, error:false, message: ""});
+
+  useEffect(() => {
+    setRes({show: false, error: false, message:""});
+  },[user]);
 
   const handleSignup = async() => {
-    setShowSignup(false);
-    const response = await axios.post("/api/user/signup", user);
-    console.log(response);
-    toast.success("User created successfully!!");
-    setShowLogin(true);
+    if(user.password.length < 8){
+      setRes({show: true, error: true, message:"Password must be atleast 8 characters long!!"});
+      return;
+    }
+    
+    try {
+      const response = await axios.post("/api/user/signup", user);
+      console.log(response);
+
+      const successData = response.data;
+      setRes({show: true, error: false, message: successData});
+      toast.success("User created successfully!!");
+      setShowSignup(false);
+      setShowLogin(true);
+    } catch (error) {
+      let errorMessage = "An unknown error occurred!!";
+      if(error.response){
+        errorMessage = error.response.data.message || error.response.data || errorMessage;
+      }else if(error.request){
+        errorMessage = "Network Error!! please check your internet connection.";
+      }else{
+        errorMessage = error.message;
+      }
+      setRes({ show: true, error: true, message: errorMessage });
+      toast.error(errorMessage);
+    }
   }
+  
   return (
     <>
     <section onClick={ () => {setShowSignup(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
@@ -71,6 +98,7 @@ export function Signup({setShowSignup, setShowLogin}) {
               required />
             </div>
           </div>
+          {res.show && <p className={`text-sm ${res.error? "text-red-800" : "text-green-800"}`}>{res.message}</p>}
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" className="w-full">
