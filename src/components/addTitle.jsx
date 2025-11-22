@@ -14,7 +14,7 @@ export function AddTitle({showList, setAddNewText, setAddNewTitle}) {
   
   return (
     <>
-    <section onClick={ () => {setAddNewTitle(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    <section onClick={ () => {setAddNewTitle(false)} } className="absolute w-[100%] h-[100%] bg-[#162238]/50 dark:bg-white/20 shadow-sm">
     </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>

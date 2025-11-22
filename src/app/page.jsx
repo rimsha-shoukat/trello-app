@@ -31,11 +31,11 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-start justify-start min-w-full h-screen">
-      <nav className="w-[100%] h-auto flex flex-row items-start justify-between py-3 px-5 bg-[#18243c] text-white shadow-md dark:bg-gray-900 dark:shadow-gray-950">
+      <nav className="w-[100%] h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
         <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />
         <SearchBar />
         <div className="flex flex-row gap-4">
-          <UserIcon loginUser={loginUser} setShowProfile={setShowProfile} setShowSignup={setShowSignup} />
+          <UserIcon loginUser={loginUser} setShowProfile={setShowProfile} setShowLogin={setShowLogin} />
           <ToggleTheme />
         </div>
       </nav>

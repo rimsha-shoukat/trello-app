@@ -15,7 +15,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export function Login({setShowLogin, setShowSignup, setLoginUser}) {
-  const[user, setUser] = useState({nameOrEmail: "", password: ""});
+  const[user, setUser] = useState({identity: "", password: ""});
   const[res, setRes] = useState({show: false, error:false, message:""});
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
 
   const handleLogin = async(e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post("/api/user/login", user);
       console.log(response);
@@ -54,7 +54,7 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
   }
   return (
     <>
-    <section onClick={ () => {setShowLogin(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    <section onClick={ () => {setShowLogin(false)} } className="absolute w-[100%] h-[100%] bg-[#162238]/50 dark:bg-white/20 shadow-sm">
     </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
@@ -70,12 +70,12 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
       <CardContent className="mb-4">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Name OR Email</Label>
+              <Label htmlFor="email">Name or Email</Label>
               <Input
-                onChange={ (e) => setUser({...user, nameOrEmail: e.target.value})}
-                id="nameOrEmail"
+                onChange={(e) => setUser({...user, identity: e.target.value})}
+                id="identity"
                 type="text"
-                placeholder="Name || Email"
+                placeholder="Name or Email"
                 required
               />
             </div>

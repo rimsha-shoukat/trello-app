@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 
 export function Signup({setShowSignup, setShowLogin}) {
   const[user, setUser] = useState({name: "", email: "", password: ""});
@@ -33,28 +32,34 @@ export function Signup({setShowSignup, setShowLogin}) {
     try {
       const response = await axios.post("/api/user/signup", user);
       console.log(response);
-      const successData = response.data;
-      setRes({show: true, error: false, message: successData});
-      toast.success("User created successfully!!");
+      const successMessage = response.data.message || "Account created successfully!";
+      setRes({show: true, error: false, message: successMessage});
       setShowSignup(false);
       setShowLogin(true);
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
-      if(error.response){
-        errorMessage = error.response.data.message || error.response.data || errorMessage;
-      }else if(error.request){
+
+      if (error.response) {
+        if (typeof error.response.data.message === 'string') {
+          errorMessage = error.response.data.message;
+        } else if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+           errorMessage = error.response.data.error;
+        }
+      } else if (error.request) {
         errorMessage = "Network Error!! please check your internet connection.";
-      }else{
+      } else {
         errorMessage = error.message;
       }
+
       setRes({ show: true, error: true, message: errorMessage });
-      toast.error(errorMessage);
     }
   }
   
   return (
     <>
-    <section onClick={ () => {setShowSignup(false)} } className="absolute w-[100%] h-[100%] bg-white/20">
+    <section onClick={ () => {setShowSignup(false)} } className="absolute w-[100%] h-[100%] bg-[#162238]/50 dark:bg-white/20 shadow-sm">
     </section>
     <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <CardHeader>
