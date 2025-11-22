@@ -5,38 +5,45 @@ import { NextResponse } from "next/server";
 import connectDB from "@/app/dbConfig/db.js";
 import jwt from "jsonwebtoken";
 
-export async function POST({request}) {
+export async function POST(request) {
     try {
         await connectDB();
         const req = await request.json();
-        const {name, email, password} = req;
-        if((!name && !email) || !password){
-            return NextResponse.json({message: "Missing required fields!!"},{status: 400})
-        }
 
+        const {identity, password} = req;
+        if(!identity || !password){
+            return NextResponse.json({error: "Missing required fields!!"},{status: 400})
+        }
+        if(identity.trim() === ""){
+            return NextResponse.json({error: "Name or Email can't be empty!!"}, {status: 400});
+        }
+        if(password.trim() === ""){
+            return NextResponse.json({error: "Password can't be empty!!"}, {status: 400});
+        }
+        
         const user = await User.findOne({
-            $or:[{name:name} , {email:email}]
+            $or:[{name:identity} , {email:identity}]
         });
         if(!user){
-            return NextResponse.json({message: "User does not exist!!"}, {status: 401});
+            return NextResponse.json({error: "User does not exist!!"}, {status: 401});
         }
 
         const validUser = bcryptjs.compare(password, user.password);
         if(!validUser){
-            return NextResponse.json({message: "Incorrect password!!"},{status: 401});
+            return NextResponse.json({error: "Incorrect password!!"},{status: 401});
         }
         
         const tokenData = {
-            _id: user._id,
+            id: user._id,
             name: user.name,
             email: user.email
         }
         
-        const token = jwt.sign(tokenData, process.env.JWT_TOKEN_SECRET, {expiresIn: "1d"});
+        const token = await jwt.sign(tokenData, process.env.JWT_TOKEN_SECRET, {expiresIn: "1d"});
         const response = NextResponse.json({
-            message: "login successful!!",
+            message: "Login successful!!",
             success: true,
-        });
+        },{status: 201});
         response.cookies.set("token", token, {httpOnly: true});
         return response;
         

@@ -14,6 +14,16 @@ export async function POST(request) {
             return NextResponse.json({error: "Missing fields required!!"}, {status: 400});
         }
 
+        if(name.trim() === ""){
+            return NextResponse.json({error: "Name can't be empty!!"}, {status: 400});
+        }
+        if(email.trim() === ""){
+            return NextResponse.json({error: "Email can't be empty!!"}, {status: 400});
+        }
+        if(password.trim() === ""){
+            return NextResponse.json({error: "Password can't be empty!!"}, {status: 400});
+        }
+
         if(password.length < 8){
             return NextResponse.json({error: "Password must be 8 characters long!!"}, {status : 400})
         }

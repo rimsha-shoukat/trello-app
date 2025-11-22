@@ -22,8 +22,20 @@ export function Signup({setShowSignup, setShowLogin}) {
     setRes({show: false, error: false, message:""});
   },[user]);
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const handleSignup = async(e) => {
     e.preventDefault();
+    if(!validateEmail(user.email)){
+      setRes({show: true, error: true, message:"Invalid email address!!"});
+      return;
+    }
     if(user.password.length < 8){
       setRes({show: true, error: true, message:"Password must be atleast 8 characters long!!"});
       return;
@@ -31,14 +43,12 @@ export function Signup({setShowSignup, setShowLogin}) {
     
     try {
       const response = await axios.post("/api/user/signup", user);
-      console.log(response);
       const successMessage = response.data.message || "Account created successfully!";
       setRes({show: true, error: false, message: successMessage});
       setShowSignup(false);
       setShowLogin(true);
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
-
       if (error.response) {
         if (typeof error.response.data.message === 'string') {
           errorMessage = error.response.data.message;
@@ -52,7 +62,6 @@ export function Signup({setShowSignup, setShowLogin}) {
       } else {
         errorMessage = error.message;
       }
-
       setRes({ show: true, error: true, message: errorMessage });
     }
   }
@@ -100,6 +109,7 @@ export function Signup({setShowSignup, setShowLogin}) {
               onChange={(e) => setUser({...user, password: e.target.value})}
               id="password" 
               type="password"
+              placeholder="Password"
               required />
             </div>
           </div>

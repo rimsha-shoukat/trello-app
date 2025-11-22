@@ -27,14 +27,12 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
 
     try {
       const response = await axios.post("/api/user/login", user);
-      console.log(response);
       const successMessage = response.data.message || "User logged in successfully!!";
       setRes({show: true, error: false, message: successMessage});
       setShowLogin(false);
       setLoginUser(true);
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
-
       if (error.response) {
         if (typeof error.response.data.message === 'string') {
           errorMessage = error.response.data.message;
@@ -48,10 +46,10 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
       } else {
         errorMessage = error.message;
       }
-
       setRes({ show: true, error: true, message: errorMessage });
     }
   }
+  
   return (
     <>
     <section onClick={ () => {setShowLogin(false)} } className="absolute w-[100%] h-[100%] bg-[#162238]/50 dark:bg-white/20 shadow-sm">
@@ -74,7 +72,7 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
               <Input
                 onChange={(e) => setUser({...user, identity: e.target.value})}
                 id="identity"
-                type="text"
+                type={"email" || "text"}
                 placeholder="Name or Email"
                 required
               />
@@ -93,6 +91,7 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
               onChange={ (e) => setUser({...user, password: e.target.value}) }
               id="password" 
               type="password" 
+              placeholder="Password"
               required />
             </div>
           </div>
