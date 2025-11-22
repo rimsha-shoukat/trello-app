@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast"
 
 export function Login({setShowLogin, setShowSignup, setLoginUser}) {
   const[user, setUser] = useState({nameOrEmail: "", password: ""});
@@ -23,26 +22,34 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
     setRes({show:false, error:false, message:""});
   },[user]);
 
-  const handleLogin = async() => {
+  const handleLogin = async(e) => {
+    e.preventDefault();
+    
     try {
       const response = await axios.post("/api/user/login", user);
       console.log(response);
-      const successData = response.data;
-      setRes({show: true, error: false, message: successData});
-      toast.success("User logged in successfully!!");
+      const successMessage = response.data.message || "User logged in successfully!!";
+      setRes({show: true, error: false, message: successMessage});
       setShowLogin(false);
       setLoginUser(true);
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
-      if(error.response){
-        errorMessage = error.response.data.message || error.response.data || errorMessage;
-      }else if(error.request){
+
+      if (error.response) {
+        if (typeof error.response.data.message === 'string') {
+          errorMessage = error.response.data.message;
+        } else if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+           errorMessage = error.response.data.error;
+        }
+      } else if (error.request) {
         errorMessage = "Network Error!! please check your internet connection.";
-      }else{
+      } else {
         errorMessage = error.message;
       }
+
       setRes({ show: true, error: true, message: errorMessage });
-      toast.error(errorMessage);
     }
   }
   return (
@@ -67,7 +74,7 @@ export function Login({setShowLogin, setShowSignup, setLoginUser}) {
               <Input
                 onChange={ (e) => setUser({...user, nameOrEmail: e.target.value})}
                 id="nameOrEmail"
-                type="email"
+                type="text"
                 placeholder="Name || Email"
                 required
               />
