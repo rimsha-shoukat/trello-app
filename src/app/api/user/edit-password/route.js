@@ -1,0 +1,65 @@
+"use server";
+import { User } from "@/models/user.model.js";
+import { NextResponse } from "next/server";
+import connectDB from "@/app/dbConfig/db.js";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+import bcryptjs from "bcryptjs";
+
+export async function PATCH(request) { 
+    try {
+        await connectDB();
+
+        const cookieStore = await cookies();
+        const token = cookieStore.get('token')?.value;
+        if (!token) {
+            return NextResponse.json({ error: "Unauthorized: No token provided" }, { status: 401 });
+        }
+
+        const decodedToken = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+        const loggedInUserId = decodedToken.id;
+
+        const req = await request.json();
+        const { fieldI, fieldII } = req; 
+        if (!fieldI || !fieldII) {
+            return NextResponse.json({ error: "Old and new password are required fields" }, { status: 400 });
+        }
+
+        if(fieldI === fieldII){
+            return NextResponse.json({ error: "New password must be different from old password" }, { status: 400 });
+        }
+
+        const user = await User.findOne({ _id: loggedInUserId });
+
+        if (!user) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        }
+
+        const validUser = bcryptjs.compare(fieldI, user.password);
+        if (!validUser) {
+            return NextResponse.json({ error: "Incorrect old user password" }, { status: 401 });
+        }
+
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPass = await bcryptjs.hash(fieldII, salt);
+        
+        const updatedUser = await User.findByIdAndUpdate(
+            loggedInUserId,
+            { password: hashedPass },
+            { new: true } 
+        );
+        
+        return NextResponse.json({
+            message: "User password updated successfully",
+            success: true,
+            user: updatedUser,
+        }, { status: 200 });
+
+    } catch (error) {
+        if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+            return NextResponse.json({ error: "Unauthorized: Invalid or expired token" }, { status: 401 });
+        }
+        
+        return NextResponse.json({ error: error.message || "Something went wrong" }, { status: 500 });
+    }
+}
