@@ -1,5 +1,5 @@
 "use server";
-import connectDB from "@/app/dbConfig/db.js";
+import connectDB from "@/app/database/db.js";
 import { User } from "@/models/user.model.js";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";

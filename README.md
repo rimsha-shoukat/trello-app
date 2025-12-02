@@ -2,7 +2,7 @@
 
 ## Description
 
-Trello App is a task management application that allows users to create boards, add lists, and make notes. It provides authentication features including sign-in, login, and password management. Built with **Next.js**, **Tailwind CSS**, and various backend technologies such as **Mongoose** and **JSON Web Tokens**, this app offers a smooth, themeable UI with **ShadCN** Next themes.
+Trello App is a task management application that allows users to create boards, add lists, and make notes. It provides authentication features including sign-in, login, and password management. Built with **Next.js**, **Tailwind CSS**, and various backend technologies such as **Mongoose**, **axios** and **JSON Web Tokens**, this app offers a smooth, themeable UI with **ShadCN** Next themes.
 
 ## Features
 
@@ -26,7 +26,7 @@ Trello App is a task management application that allows users to create boards, 
 ## Technologies
 
 - **Frontend**: Next.js, React, Tailwind CSS, ShadCN, lucide-react
-- **Backend**: Node.js, Express, Mongoose, JSON Web Tokens, Nodemailer
+- **Backend**: Node.js, Express, Mongoose, JSON Web Tokens, Nodemailer, axios
 - **Database**: MongoDB
 
 ## Installation
@@ -63,16 +63,16 @@ Visit **http://localhost:3000** to access the app.
 
 ## Usage
 
--**Sign up**: Create an account with your email and password.
+- **Sign up**: Create an account with your email and password.
 
--**Sign in**: Use your credentials to log in.
+- **Sign in**: Use your credentials to log in.
 
 -**Create boards**: Add boards for task management.
 
--**Add lists**: Each board can have multiple lists to organize tasks.
+- **Add lists**: Each board can have multiple lists to organize tasks.
 
--**Add notes**: Add, edit, and delete tasks inside each list.
+- **Add notes**: Add, edit, and delete tasks inside each list.
 
--**Change themes**: Toggle between light and dark themes using the theme switcher.
+- **Change themes**: Toggle between light and dark themes using the theme switcher.
 
--**Password reset**: Use the "Forgot Password" option to reset your password via email.
+- **Password reset**: Use the "Forgot Password" option to reset your password via email.

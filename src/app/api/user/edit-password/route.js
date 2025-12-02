@@ -1,7 +1,7 @@
 "use server";
 import { User } from "@/models/user.model.js";
 import { NextResponse } from "next/server";
-import connectDB from "@/app/dbConfig/db.js";
+import connectDB from "@/app/database/db.js";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import bcryptjs from "bcryptjs";
