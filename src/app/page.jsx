@@ -14,6 +14,7 @@ import { AddText } from "@/components/utils/addText.jsx";
 import { AddTitle } from "@/components/utils/addTitle.jsx";
 import axios from "axios";
 import { Notice } from "@/components/utils/notice.jsx";
+import { Landing } from "@/components/utils/landing.jsx";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -50,7 +51,7 @@ export default function Home() {
   return (
     <section className="flex flex-col items-start justify-start min-w-full h-screen">
       <nav className="w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
-        <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />
+        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />}
         <SearchBar />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
@@ -62,19 +63,21 @@ export default function Home() {
           <div className="w-full h-screen text-center text-blue-800 text-2xl">Loading....</div>
         ) : error ? (
           <div className="w-full h-screen text-center text-red-800 text-2xl">{error}</div>
+        ) : !user ? (
+          <Landing setShowLogin={setShowLogin} />
         ) : showList ? (
           <List setAddNewTitle={setAddNewTitle} />
         ) : (
           <Note setAddNewTitle={setAddNewTitle} />
         )}
       </main>
-      {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} />}
+      {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} setNotice={setNotice} />}
       {showSignup && <Signup setShowSignup={setShowSignup} setShowLogin={setShowLogin} fetchUser={fetchUser} />}
       {!loading && showProfile && user && <Profile setShowProfile={setShowProfile} fetchUser={fetchUser} user={user} setNotice={setNotice} />}
       {addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} />}
       {addNewText && <AddText showList={showList} setAddNewText={setAddNewText} />}
       {notice && <Notice notice={notice} setNotice={setNotice} />}
-      <Add setAddNewTitle={setAddNewTitle} />
+      {user && <Add setAddNewTitle={setAddNewTitle} />}
     </section>
   );
 }

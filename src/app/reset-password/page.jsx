@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
@@ -13,25 +12,46 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { SendEmailCard } from "@/components/utils/send-email-card.jsx";
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-export function Login({ setShowLogin, setShowSignup, fetchUser, setNotice }) {
-    const [user, setUser] = useState({ email: "", password: "" });
+export default function ResetPassword() {
+    const router = useRouter();
+    const [password, setPassword] = useState({ one: "", two: "" });
     const [res, setRes] = useState({ show: false, error: false, message: "" });
-    const [showEmailCard, setShowEmailCard] = useState(false);
+    const [validToken, setValidToken] = useState(false);
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
+
+    (async () => {
+        try {
+            let res = await axios.post("/api/user/valid-token", { token });
+            if (res.status === 200) {
+                setValidToken(true);
+            }
+        } catch (error) {
+            setValidToken(false);
+        }
+    })();
+
 
     useEffect(() => {
         setRes({ show: false, error: false, message: "" });
-    }, [user]);
+    }, [password]);
 
-    const handleLogin = async (e) => {
+    const handleResetPassword = async (e) => {
         e.preventDefault();
+
+        if (password.one !== password.two) {
+            setRes({ show: true, error: true, message: "Passwords do not match!!" });
+            return;
+        }
+
         try {
-            const response = await axios.post("/api/user/login", user);
-            const successMessage = response.data.message || "User logged in successfully!!";
+            const response = await axios.post("/api/user/forgot-password", { password: password.one, token: token });
+            const successMessage = response.data.message || "Password updated successfully!!";
             setRes({ show: true, error: false, message: successMessage });
-            setShowLogin(false);
-            await fetchUser();
+            router.push("/");
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
             if (error.response) {
@@ -51,50 +71,51 @@ export function Login({ setShowLogin, setShowSignup, fetchUser, setNotice }) {
         }
     }
 
-    const handleResetPassword = () => {
-        setShowEmailCard(true);
+    if (!validToken) {
+        return (
+            <>
+                <section className="absolute w-full h-full bg-[#162238]/50 dark:bg-white/20 shadow-sm">
+                </section>
+                <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <CardHeader>
+                        <CardTitle>Invalid or Expired Token</CardTitle>
+                        <CardDescription>
+                            The password reset link is invalid or has expired. Please request a new link to reset your password.
+                        </CardDescription>
+                    </CardHeader>
+                </Card>
+            </>
+        )
     }
-
     return (
         <>
-            <section onClick={() => { setShowLogin(false) }} className="absolute w-full h-full bg-[#162238]/50 dark:bg-white/20 shadow-sm">
+            <section className="absolute w-full h-full bg-[#162238]/50 dark:bg-white/20 shadow-sm">
             </section>
             <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <CardHeader>
-                    <CardTitle>Login to your account</CardTitle>
+                    <CardTitle>Reset your password</CardTitle>
                     <CardDescription>
-                        Enter your email below to login to your account
+                        Enter your new password below to reset your old password
                     </CardDescription>
-                    <CardAction>
-                        <Button onClick={() => { setShowLogin(false); setShowSignup(true) }} variant="link">Sign Up</Button>
-                    </CardAction>
                 </CardHeader>
-                <form onSubmit={(e) => handleLogin(e)}>
+                <form onSubmit={(e) => handleResetPassword(e)}>
                     <CardContent className="mb-4">
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">
-                                <Label>Email</Label>
+                                <Label>Enter new password</Label>
                                 <Input
-                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                                    id="email"
-                                    type="email"
-                                    placeholder="Email"
+                                    onChange={(e) => setPassword({ ...password, one: e.target.value })}
+                                    id="one"
+                                    type="password"
+                                    placeholder="New password"
                                     required
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
-                                    <a onClick={handleResetPassword}
-                                        href="#"
-                                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                    >
-                                        Forgot your password?
-                                    </a>
-                                </div>
+                                <Label>Again enter new password</Label>
                                 <Input
-                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                    id="password"
+                                    onChange={(e) => setPassword({ ...password, two: e.target.value })}
+                                    id="two"
                                     type="password"
                                     placeholder="Password"
                                     required />
@@ -102,17 +123,13 @@ export function Login({ setShowLogin, setShowSignup, fetchUser, setNotice }) {
                         </div>
                         {res.show && <p className={`text-sm ${res.error ? "text-red-800" : "text-green-800"}`}>{res.message}</p>}
                     </CardContent>
-                    <CardFooter className="flex-col gap-2">
+                    <CardFooter>
                         <Button type="submit" className="w-full">
-                            Login
-                        </Button>
-                        <Button variant="outline" className="w-full">
-                            Login with Google
+                            update password
                         </Button>
                     </CardFooter>
                 </form>
             </Card>
-            {showEmailCard && <SendEmailCard setNotice={setNotice} setShowLogin={setShowLogin} setShowEmailCard={setShowEmailCard} />}
         </>
     )
 }

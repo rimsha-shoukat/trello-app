@@ -245,8 +245,8 @@ export function Profile({ setShowProfile, fetchUser, user, setNotice }) {
                             </CardAction>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
-                            <h1>Notes: {user?.notes?.length || null} </h1>
-                            <h1>Boards: {user?.boards?.length || null} </h1>
+                            <h1>Notes: {user?.notes?.length || "null"} </h1>
+                            <h1>Boards: {user?.boards?.length || "null"} </h1>
                         </div>
                     </div>
                 </CardContent>
