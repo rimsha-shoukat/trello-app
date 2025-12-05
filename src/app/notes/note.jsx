@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Notebook } from "lucide-react";
 
-export function Note({ setAddNewTitle }) {
-    const [notes, setNotes] = useState([]);
+export function Note({ setAddNewTitle, user }) {
+    const [notes, setNotes] = useState(user.notes || []);
 
     if (notes.length <= 0) {
         return (
@@ -20,22 +20,31 @@ export function Note({ setAddNewTitle }) {
         )
     }
 
+    const handleShow = (id) => {
+        let section = document.getElementById(id);
+        if (section.style.display === "none" || section.style.display === "") {
+            section.style.display = "block";
+            return;
+        }
+        section.style.display = "none";
+    }
+
     return (
-        <div className="w-full h-auto columns-2">
-            <div className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-400 dark:bg-gray-900 shadow-sm">
-                <span className="w-full flex flex-row items-center justify-between mb-4">
-                    <span>
-                        <h1>Note Name</h1>
-                        <p className="text-xs">Created at: 01/04</p>
+        <div className="w-full h-auto columns-2 max-[750px]:columns-1">
+            {notes.map((note) => (
+                <div key={note.id} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-600 bg-gray-200 dark:bg-gray-900 shadow-sm">
+                    <span className="w-full flex flex-row items-center justify-between mb-4">
+                        <span>
+                            <h1>{note.title}</h1>
+                            <p className="text-xs">Created at: {note.createdAt}</p>
+                        </span>
+                        <Button onClick={() => handleShow(note.id)} className="hover:bg-gray-300" variant="ghost"><ChevronDown /></Button>
                     </span>
-                    <Button variant="ghost"><ChevronDown /></Button>
-                </span>
-                <section className="w-full h-auto flex flex-col items-start justify-center gap-2">
-                    <p className="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eaque nesciunt iusto, voluptas iure corporis quod, repellendus consequuntur repellat fuga, beatae sed voluptatem? Voluptas incidunt, impedit laborum accusantium possimus cupiditate!
-                        Delectus odio tenetur architecto hic, nesciunt quod, voluptates libero animi, rem praesentium quos sapiente distinctio. Quam rerum quo, voluptatem sunt perferendis, accusantium nulla voluptate veniam adipisci aspernatur cupiditate rem voluptatum.
-                        Saepe tenetur quasi iste sit numquam, sunt accusantium natus neque hic a corporis officia in molestiae dolor dolore vero? Iste tempore laudantium porro totam. Quos commodi sapiente saepe quas quo!</p>
-                </section>
-            </div>
+                    <section id={note.id} className="w-full h-auto flex flex-col items-start justify-center gap-2 transition-transform duration-300 ease-in-out">
+                        <p className="text-justify">{note.text}</p>
+                    </section>
+                </div>
+            ))}
         </div>
     )
 }

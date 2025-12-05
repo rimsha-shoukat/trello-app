@@ -9,7 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Section({ showList, setShowList, setAddNewTitle }) {
+export function Section({ showList, setShowList, setAddNewTitle, user, setAddNewBoard }) {
+  let boards = user.boards || [];
+  let notes = user.notes || [];
 
   return (
     <>
@@ -29,20 +31,21 @@ export function Section({ showList, setShowList, setAddNewTitle }) {
             <DropdownMenuItem className="p-4">
               <h1 className="font-semibold text-lg">ALL</h1>
             </DropdownMenuItem>
-            <DropdownMenuItem className="p-4">
-              <Notebook />
-              <h1 className="font-semibold">{!showList ? "Note" : "Board"} name 2</h1>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-4">
-              <Notebook />
-              <h1 className="font-semibold">{!showList ? "Note" : "Board"} name 4</h1>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-4">
-              <Notebook />
-              <h1 className="font-semibold">{!showList ? "Note" : "Board"} name 3</h1>
-            </DropdownMenuItem>
+            {showList ? (boards.map((board) => (
+              <DropdownMenuItem key={board.id} className="p-4 flex flex-row items-center justify-start gap-2">
+                <Notebook />
+                <h1 className="font-semibold">{board.title}</h1>
+              </DropdownMenuItem>
+            ))
+            ) : (notes.map((note) => (
+              <DropdownMenuItem key={note.id} className="p-4 flex flex-row items-center justify-start gap-2">
+                <Notebook />
+                <h1 className="font-semibold">{note.title}</h1>
+              </DropdownMenuItem>
+            ))
+            )}
           </DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => { setAddNewTitle(true) }} className="p-4 flex flex-row items-center justify-start gap-2">
+          <DropdownMenuItem onClick={() => !showList ? setAddNewTitle(true) : setAddNewBoard(true)} className="p-4 flex flex-row items-center justify-start gap-2">
             <CirclePlus />
             <h1 className="font-semibold">{!showList ? "Note" : "Board"}</h1>
           </DropdownMenuItem>

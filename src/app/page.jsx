@@ -5,7 +5,7 @@ import { SearchBar } from "@/components/utils/search-bar.jsx";
 import { UserIcon } from "@/components/utils/user-icon.jsx";
 import { Section } from "@/components/utils/section.jsx";
 import { Add } from "@/components/utils/add.jsx";
-import { List } from "./[boards]/board.jsx";
+import { Board } from "./[boards]/board.jsx";
 import { Note } from "./notes/note.jsx";
 import { Login } from "./user/login.jsx";
 import { Signup } from "./user/signup.jsx";
@@ -15,6 +15,7 @@ import { AddTitle } from "@/components/utils/addTitle.jsx";
 import axios from "axios";
 import { Notice } from "@/components/utils/notice.jsx";
 import { Landing } from "@/components/utils/landing.jsx";
+import { AddBoard } from "@/components/utils/addBoard.jsx";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -27,6 +28,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState("");
+  const [addNewBoard, setAddNewBoard] = useState(false);
 
   const fetchUser = async () => {
     setLoading(true);
@@ -51,7 +53,7 @@ export default function Home() {
   return (
     <section className="flex flex-col items-start justify-start min-w-full h-screen">
       <nav className=" max-[750px]:hidden w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
-        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />}
+        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} />}
         <SearchBar />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
@@ -60,7 +62,7 @@ export default function Home() {
       </nav>
       <nav className="min-[750px]:hidden w-full h-auto py-3 px-5 flex flex-col items-center justify-center text-white shadow-md dark:shadow-md dark:shadow-black">
         <div className="w-full flex flex-row items-start justify-between mb-3">
-          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />}
+          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} />}
           <div className="flex flex-row gap-4">
             <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
             <ToggleTheme />
@@ -76,9 +78,9 @@ export default function Home() {
         ) : !user ? (
           <Landing setShowLogin={setShowLogin} />
         ) : showList ? (
-          <List setAddNewTitle={setAddNewTitle} />
+          <Board user={user} setAddNewBoard={setAddNewBoard} />
         ) : (
-          <Note setAddNewTitle={setAddNewTitle} />
+          <Note setAddNewTitle={setAddNewTitle} user={user} />
         )}
       </main>
       {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} setNotice={setNotice} />}
@@ -86,8 +88,9 @@ export default function Home() {
       {!loading && showProfile && user && <Profile setShowProfile={setShowProfile} fetchUser={fetchUser} user={user} setNotice={setNotice} />}
       {addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} />}
       {addNewText && <AddText showList={showList} setAddNewText={setAddNewText} />}
+      {addNewBoard && <AddBoard setAddNewBoard={setAddNewBoard} setAddNewTitle={setAddNewTitle} />}
       {notice && <Notice notice={notice} setNotice={setNotice} />}
-      {user && <Add setAddNewTitle={setAddNewTitle} />}
+      {user && <Add showList={showList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} />}
     </section>
   );
 }

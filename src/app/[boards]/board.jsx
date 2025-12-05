@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, CirclePlus, Notebook } from "lucide-react";
 import { Card } from "@/components/utils/card.jsx";
 
-export function List({ setAddNewTitle }) {
-    const [list, setList] = useState([]);
+export function Board({ user, setAddNewBoard }) {
+    const [board, setBoard] = useState(user.boards || []);
 
-    if (list.length <= 0) {
+    if (board.length <= 0) {
         return (
             <div className="flex items-center justify-center w-full h-full">
                 <div className="break-inside-avoid flex flex-col items-center justify-center gap-4">
@@ -15,7 +15,7 @@ export function List({ setAddNewTitle }) {
                     <h1>No Boards Yet!</h1>
                     <p>You haven&apos;t created any boards yet. Get started by creating
                         your first board.</p>
-                    <Button onClick={() => { setAddNewTitle(true) }}>Create Board</Button>
+                    <Button onClick={() => { setAddNewBoard(true) }}>Create Board</Button>
                 </div>
             </div>
         )

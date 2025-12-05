@@ -1,9 +1,9 @@
 import { CirclePlus } from "lucide-react";
 import { Button } from "@/components/ui/button"
 
-export function Add({ setAddNewTitle }) {
+export function Add({showList, setAddNewTitle, setAddNewBoard }) {
   return (
-    <Button onClick={() => setAddNewTitle(true)} variant="outline" className="fixed bg-black hover:bg-black hover:text-white text-white bottom-0 right-0 m-8 shadow-sm hover:scale-105 transition-transform duration-200">
+    <Button onClick={() => !showList ? setAddNewTitle(true) : setAddNewBoard(true)} variant="outline" className="fixed bg-black hover:bg-black hover:text-white text-white bottom-0 right-0 m-8 shadow-sm hover:scale-105 transition-transform duration-200">
       <CirclePlus />
     </Button>
   )
