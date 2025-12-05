@@ -90,7 +90,7 @@ export default function Home() {
       {addNewText && <AddText showList={showList} setAddNewText={setAddNewText} />}
       {addNewBoard && <AddBoard setAddNewBoard={setAddNewBoard} setAddNewTitle={setAddNewTitle} />}
       {notice && <Notice notice={notice} setNotice={setNotice} />}
-      {user && <Add showList={showList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} />}
+      {user && <Add showList={showList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} user={user}/>}
     </section>
   );
 }
