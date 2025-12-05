@@ -50,13 +50,23 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-start justify-start min-w-full h-screen">
-      <nav className="w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
+      <nav className=" max-[750px]:hidden w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
         {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />}
         <SearchBar />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
           <ToggleTheme />
         </div>
+      </nav>
+      <nav className="min-[750px]:hidden w-full h-auto py-3 px-5 flex flex-col items-center justify-center text-white shadow-md dark:shadow-md dark:shadow-black">
+        <div className="w-full flex flex-row items-start justify-between mb-3">
+          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} />}
+          <div className="flex flex-row gap-4">
+            <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
+            <ToggleTheme />
+          </div>
+        </div>
+        <SearchBar />
       </nav>
       <main className="w-full h-full p-6 my-6">
         {loading ? (

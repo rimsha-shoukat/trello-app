@@ -244,9 +244,9 @@ export function Profile({ setShowProfile, fetchUser, user, setNotice }) {
                                 <Button onClick={() => handleEdit("Update", "Update user password!!", "Enter old password", "password", "Enter new password", "password", "/api/user/edit-password", "User password updated successfully!!")} variant="link">Edit</Button>
                             </CardAction>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
-                            <h1>Notes: {user?.notes?.length || "null"} </h1>
-                            <h1>Boards: {user?.boards?.length || "null"} </h1>
+                        <div className="w-full flex flex-row">
+                            <h1 className="w-[50%]">Notes: {user?.notes?.length || "null"} </h1>
+                            <h1 className="w-[50%]">Boards: {user?.boards?.length || "null"} </h1>
                         </div>
                     </div>
                 </CardContent>
