@@ -5,10 +5,10 @@ import connectDB from "@/app/database/db.js";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export async function PATCH(request) { 
+export async function PATCH(request) {
     try {
         await connectDB();
-        
+
         const cookieStore = await cookies();
         const token = cookieStore.get('token')?.value;
         if (!token) {
@@ -19,17 +19,17 @@ export async function PATCH(request) {
         const loggedInUserId = decodedToken.id;
 
         const req = await request.json();
-        const { fieldI, fieldII } = req; 
+        const { fieldI, fieldII } = req;
 
         if (!fieldI || !fieldII) {
             return NextResponse.json({ error: "Old and new name are required fields" }, { status: 400 });
         }
 
-        if(fieldI === fieldII){
+        if (fieldI === fieldII) {
             return NextResponse.json({ error: "New name must be different from old name" }, { status: 400 });
         }
 
-        const user = await User.findOne({ _id: loggedInUserId });
+        const user = await User.findOne({ _id: loggedInUserId }).select("-password");
 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -38,13 +38,13 @@ export async function PATCH(request) {
         if (user.name !== fieldI) {
             return NextResponse.json({ error: "Incorrect old user name" }, { status: 401 });
         }
-        
+
         const updatedUser = await User.findByIdAndUpdate(
-            loggedInUserId,
+            { _id: loggedInUserId },
             { name: fieldII },
-            { new: true } 
+            { new: true }
         );
-        
+
         return NextResponse.json({
             message: "User name updated successfully",
             success: true,
@@ -55,7 +55,7 @@ export async function PATCH(request) {
         if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
             return NextResponse.json({ error: "Unauthorized: Invalid or expired token" }, { status: 401 });
         }
-        
+
         return NextResponse.json({ error: error.message || "Something went wrong" }, { status: 500 });
     }
 }

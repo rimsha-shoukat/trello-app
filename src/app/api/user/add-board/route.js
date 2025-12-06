@@ -1,10 +1,10 @@
 "use server";
 import { User } from "@/models/user.model.js";
+import { Board } from "@/models/board.model.js"; 
 import { NextResponse } from "next/server";
 import connectDB from "@/app/database/db.js";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import bcryptjs from "bcryptjs";
 
 export async function PATCH(request) {
     try {
@@ -20,45 +20,38 @@ export async function PATCH(request) {
         const loggedInUserId = decodedToken.id;
 
         const req = await request.json();
-        const { fieldI, fieldII } = req;
-        if (!fieldI || !fieldII) {
-            return NextResponse.json({ error: "Old and new password are required fields" }, { status: 400 });
+        const { boardName } = req;
+
+        if (!boardName || boardName.trim() === "") {
+            return NextResponse.json({ error: "Board name is a required field" }, { status: 400 });
         }
 
-        if (fieldI === fieldII) {
-            return NextResponse.json({ error: "New password must be different from old password" }, { status: 400 });
-        }
-
-        const user = await User.findOne({ _id: loggedInUserId });
-
+        const user = await User.findOne({ _id: loggedInUserId }).select("-password");
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        const validUser = await bcryptjs.compare(fieldI, user.password);
-        if (!validUser) {
-            return NextResponse.json({ error: "Incorrect old user password" }, { status: 401 });
+        const existingBoard = await Board.findOne({ title: boardName, user: loggedInUserId });
+        if (existingBoard) {
+            return NextResponse.json({ error: "Board name already exists" }, { status: 400 });
         }
 
-        const salt = await bcryptjs.genSalt(10);
-        const hashedPass = await bcryptjs.hash(fieldII, salt);
+        const newBoard = new Board({ title: boardName, lists: [], user: loggedInUserId });
+        await newBoard.save();
 
-        await User.findByIdAndUpdate(
-            { _id: loggedInUserId },
-            { password: hashedPass },
-            { new: true }
-        );
+        user.boards.push(newBoard._id);
+        const updatedUser = await user.save();
 
         return NextResponse.json({
-            message: "User password updated successfully",
+            message: "Board created successfully",
             success: true,
+            user: updatedUser,
         }, { status: 200 });
 
     } catch (error) {
         if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
             return NextResponse.json({ error: "Unauthorized: Invalid or expired token" }, { status: 401 });
         }
-
         return NextResponse.json({ error: error.message || "Something went wrong" }, { status: 500 });
     }
 }

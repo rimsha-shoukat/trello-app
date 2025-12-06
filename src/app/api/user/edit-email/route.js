@@ -29,7 +29,7 @@ export async function PATCH(request) {
             return NextResponse.json({ error: "New email must be different from old email" }, { status: 400 });
         }
 
-        const user = await User.findOne({ _id: loggedInUserId });
+        const user = await User.findOne({ _id: loggedInUserId }).select("-password");
 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -40,7 +40,7 @@ export async function PATCH(request) {
         }
         
         const updatedUser = await User.findByIdAndUpdate(
-            loggedInUserId,
+            { _id: loggedInUserId },
             { email: fieldII },
             { new: true } 
         );

@@ -30,7 +30,6 @@ export async function GET() {
         if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
             return NextResponse.json({ error: "Unauthorized: Invalid or expired token" }, { status: 401 });
         }
-
         return NextResponse.json({ error: error.message || "Something went wrong" }, { status: 500 });
     }
 }

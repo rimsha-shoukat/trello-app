@@ -15,7 +15,7 @@ export async function POST(request) {
 
         const decoded = jwt.verify(token, process.env.FORGOT_PASSWORD_TOKEN);
         const userId = decoded.id;
-        const user = await User.findOne({ _id: userId, forgotPasswordToken: token, forgotPasswordTokenExpiry: { $gt: Date.now() } });
+        const user = await User.findOne({ _id: userId, forgotPasswordToken: token, forgotPasswordTokenExpiry: { $gt: Date.now() } }).select("-password");
 
         if (!user) {
             return NextResponse.json({ error: "Unauthorized: Invalid or expired token" }, { status: 401 });
