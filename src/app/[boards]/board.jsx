@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, CirclePlus, Notebook } from "lucide-react";
 import { Card } from "@/components/utils/card.jsx";
 
-export function Board({ user, setAddNewBoard }) {
+export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice }) {
     const [board, setBoard] = useState(user.boards || []);
+    let activeBoard = board.find(b => b._id === activeBoardId) || null;
 
     if (board.length <= 0) {
         return (
@@ -15,35 +16,57 @@ export function Board({ user, setAddNewBoard }) {
                     <h1>No Boards Yet!</h1>
                     <p>You haven&apos;t created any boards yet. Get started by creating
                         your first board.</p>
-                    <Button onClick={() => { setAddNewBoard(true) }}>Create Board</Button>
+                    <Button onClick={() => { setAddNewBoard(true); }}>Create Board</Button>
                 </div>
             </div>
         )
     }
 
+    if (activeBoardId === null) {
+        return (
+            <div className="w-full h-auto columns-3">
+                {
+                    board.map((b) => (
+                        <div key={b._id} onClick={setActiveBoardId(b._id)} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
+                            <span>
+                                <h1>{b.title}</h1>
+                                <p>{b.lists.length} Lists</p>
+                            </span>
+                            <p className="text-xs">Created at: {b.createdAt}</p>
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    }
+
+    const handleShow = (id) => {
+        let list = document.getElementById(id);
+        list.style.display = list.style.display === "none" ? "block" : "none";
+    }
+
     return (
         <div className="w-full h-auto columns-3">
-            <div className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
-                <span className="w-full flex flex-row items-center justify-between mb-4">
-                    <span>
-                        <h1>List Name</h1>
-                        <p>5</p>
+            {activeBoard.lists.map((list) => (
+                <div key={list._id} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
+                    <span className="w-full flex flex-row items-center justify-between mb-4">
+                        <span>
+                            <h1>{list.name}</h1>
+                            <p>{list.cards.length} Cards</p>
+                        </span>
+                        <Button onClick={() => handleShow(list._id)} variant="ghost"><ChevronDown /></Button>
                     </span>
-                    <Button variant="ghost"><ChevronDown /></Button>
-                </span>
-                <section className="w-full h-auto flex flex-col items-center justify-center gap-2">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                </section>
-                <span className="w-full flex flex-row items-center justify-between p-2 mt-4">
-                    <p className="text-xs">Created at: 01/04</p>
-                    <Button className="bg-gray-200/50 dark:bg-gray-800" variant="outline">
-                        <CirclePlus />
-                    </Button>
-                </span>
-            </div>
+                    <section id={list._id} className="w-full h-auto flex flex-col items-center justify-center gap-2">
+                        <Card list={list} setNotice={setNotice} boardId={activeBoard._id} />
+                    </section>
+                    <span className="w-full flex flex-row items-center justify-between p-2 mt-4">
+                        <p className="text-xs">Created at: {list.createdAt}</p>
+                        <Button className="bg-gray-200/50 dark:bg-gray-800" variant="outline">
+                            <CirclePlus onClick={() => setActiveListId(list._id)} />
+                        </Button>
+                    </span>
+                </div>
+            ))}
         </div>
     )
 }

@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Section({ showList, setShowList, setAddNewTitle, user, setAddNewBoard }) {
+export function Section({ showList, setShowList, setAddNewTitle, user, setAddNewBoard, setActiveBoardId, setActiveNoteId }) {
   let boards = user.boards || [];
   let notes = user.notes || [];
 
@@ -23,16 +23,16 @@ export function Section({ showList, setShowList, setAddNewTitle, user, setAddNew
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 mt-2" align="end">
-          <DropdownMenuItem onClick={() => { setShowList(!showList) }} className="p-4 flex flex-row items-center justify-start gap-2">
+          <DropdownMenuItem onClick={() => { setShowList(!showList); setActiveBoardId(null); }} className="p-4 flex flex-row items-center justify-start gap-2">
             <ArrowRightLeft />
             <h1 className="font-semibold">{showList ? "Notes" : "Boards"}</h1>
           </DropdownMenuItem>
           <DropdownMenuGroup>
             <DropdownMenuItem className="p-4">
-              <h1 className="font-semibold text-lg">ALL</h1>
+              <h1 onClick={() => {setActiveBoardId(null); setActiveNoteId(null)}} className="font-semibold text-lg">ALL</h1>
             </DropdownMenuItem>
             {showList ? (boards.map((board) => (
-              <DropdownMenuItem key={board.id} className="p-4 flex flex-row items-center justify-start gap-2">
+              <DropdownMenuItem key={board._id} onClick={() => setActiveBoardId(board._id)} className="p-4 flex flex-row items-center justify-start gap-2">
                 <Notebook />
                 <h1 className="font-semibold">{board.title}</h1>
               </DropdownMenuItem>
