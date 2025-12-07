@@ -1,13 +1,12 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Notebook } from "lucide-react";
 import axios from "axios";
 
-export function Note({ setAddNewTitle, user, setNotice }) {
-    const [notes, setNotes] = useState(user.notes || []);
+export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
 
-    if (notes.length <= 0) {
+    if (user.notes.length <= 0) {
         return (
             <div className="flex items-center justify-center w-full h-full">
                 <div className="break-inside-avoid flex flex-col items-center justify-center gap-4">
@@ -21,9 +20,22 @@ export function Note({ setAddNewTitle, user, setNotice }) {
         )
     }
 
+    const fetchNotes = async () => {
+        try {
+            let res = await axios.get("/api/user/get-notes");
+            setNotes(res.data || null);
+        } catch (error) {
+            console.error("Error fetching notes:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchNotes();
+    }, [user]);
+
     const handleShow = (id) => {
         let section = document.getElementById(id);
-        if (section.style.display === "none" || section.style.display === "") {
+        if (section.style.display === "none") {
             section.style.display = "block";
             return;
         }
@@ -66,11 +78,11 @@ export function Note({ setAddNewTitle, user, setNotice }) {
                         <Button onClick={() => handleShow(note._id)} className="hover:bg-gray-300" variant="ghost"><ChevronDown /></Button>
                     </span>
                     <section id={note._id} className="w-full h-auto flex flex-col items-start justify-center gap-2 transition-transform duration-300 ease-in-out">
-                        <textarea onClick={() => handleNoteUpdate(note._id)} className="text-justify">{note.text}</textarea>
+                        <textarea onClick={() => handleNoteUpdate(note._id)} className="text-justify" defaultValue={note.text} />
                     </section>
                 </div>
             ))}
-            
+
         </div>
     )
 }

@@ -32,6 +32,8 @@ export default function Home() {
   const [activeBoardId, setActiveBoardId] = useState(null);
   const [activeListId, setActiveListId] = useState(null);
   const [activeNoteId, setActiveNoteId] = useState(null);
+  const [notes, setNotes] = useState([]);
+  const [boards, setBoards] = useState([]);
 
   const fetchUser = async () => {
     setLoading(true);
@@ -54,9 +56,9 @@ export default function Home() {
   }, [showList]);
 
   return (
-    <section className="flex flex-col items-start justify-start min-w-full h-screen">
+    <section className="flex flex-col items-start justify-start min-w-full h-full">
       <nav className=" max-[750px]:hidden w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
-        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} />}
+        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
         <SearchBar />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
@@ -65,7 +67,7 @@ export default function Home() {
       </nav>
       <nav className="min-[750px]:hidden w-full h-auto py-3 px-5 flex flex-col items-center justify-center text-white shadow-md dark:shadow-md dark:shadow-black">
         <div className="w-full flex flex-row items-start justify-between mb-3">
-          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} />}
+          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
           <div className="flex flex-row gap-4">
             <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
             <ToggleTheme />
@@ -81,9 +83,9 @@ export default function Home() {
         ) : !user ? (
           <Landing setShowLogin={setShowLogin} />
         ) : showList ? (
-          <Board user={user} setAddNewBoard={setAddNewBoard} setActiveListId={setActiveListId} activeBoardId={activeBoardId} setActiveBoardId={setActiveBoardId} setNotice={setNotice} />
+          <Board user={user} setAddNewBoard={setAddNewBoard} setActiveListId={setActiveListId} activeBoardId={activeBoardId} setActiveBoardId={setActiveBoardId} setNotice={setNotice} boards={boards} setBoards={setBoards} />
         ) : (
-          <Note setAddNewTitle={setAddNewTitle} user={user} setNotice={setNotice} />
+          <Note setAddNewTitle={setAddNewTitle} user={user} setNotice={setNotice} notes={notes} setNotes={setNotes} />
         )}
       </main>
       {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} setNotice={setNotice} />}

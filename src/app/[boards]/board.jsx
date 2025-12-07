@@ -4,11 +4,23 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, CirclePlus, Notebook } from "lucide-react";
 import { Card } from "@/components/utils/card.jsx";
 
-export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice }) {
-    const [board, setBoard] = useState(user.boards || []);
-    let activeBoard = board.find(b => b._id === activeBoardId) || null;
+export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice, boards, setBoards }) {
+    let activeBoard = boards.find(b => b._id === activeBoardId) || null;
 
-    if (board.length <= 0) {
+    const fetchBoards = async () => {
+        try {
+            let res = await axios.get("/api/user/get-boards");
+            setBoards(res.data || null);
+        } catch (error) {
+            console.error("Error fetching notes:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchBoards();
+    }, [user]);
+
+    if (user.boards.length <= 0) {
         return (
             <div className="flex items-center justify-center w-full h-full">
                 <div className="break-inside-avoid flex flex-col items-center justify-center gap-4">
@@ -26,7 +38,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
         return (
             <div className="w-full h-auto columns-3">
                 {
-                    board.map((b) => (
+                    boards.map((b) => (
                         <div key={b._id} onClick={setActiveBoardId(b._id)} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
                             <span>
                                 <h1>{b.title}</h1>

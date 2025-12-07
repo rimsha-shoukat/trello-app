@@ -9,9 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Section({ showList, setShowList, setAddNewTitle, user, setAddNewBoard, setActiveBoardId, setActiveNoteId }) {
-  let boards = user.boards || [];
-  let notes = user.notes || [];
+export function Section({ showList, setShowList, setAddNewTitle, user, setAddNewBoard, setActiveBoardId, setActiveNoteId, notes, boards }) {
 
   return (
     <>
@@ -29,7 +27,7 @@ export function Section({ showList, setShowList, setAddNewTitle, user, setAddNew
           </DropdownMenuItem>
           <DropdownMenuGroup>
             <DropdownMenuItem className="p-4">
-              <h1 onClick={() => {setActiveBoardId(null); setActiveNoteId(null)}} className="font-semibold text-lg">ALL</h1>
+              <h1 onClick={() => { setActiveBoardId(null); setActiveNoteId(null) }} className="font-semibold text-lg">ALL</h1>
             </DropdownMenuItem>
             {showList ? (boards.map((board) => (
               <DropdownMenuItem key={board._id} onClick={() => setActiveBoardId(board._id)} className="p-4 flex flex-row items-center justify-start gap-2">
