@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import connectDB from "@/app/database/db.js";
 import { NextResponse } from "next/server";
+import { User } from "@/models/user.model.js";
 
 export async function PATCH(request) {
     try {
@@ -19,16 +20,15 @@ export async function PATCH(request) {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
         const userId = decoded.id;
 
-        const { noteId, text } = await request.json();
+        const { noteId } = await request.json();
 
         const note = await Note.findOne({ _id: noteId, user: userId });
         if (!note) {
             return NextResponse.json({ error: "Note not found" }, { status: 404 });
         }
-
-        note.text = text;
-        await note.save();
-
+        await note.deleteOne();
+        await User.findByIdAndUpdate(userId, { $pull: { notes: noteId } });
+        
         let notes = await Note.find({ user: userId });
         return NextResponse.json(notes, { status: 200 });
     } catch (error) {

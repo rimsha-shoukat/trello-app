@@ -33,7 +33,7 @@ export async function PATCH(request) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        if (listId === null || boardId === null) {
+        if (!listId || !boardId) {
             if (!noteId) {
                 return NextResponse.json({ error: "noteId is required to update a note" }, { status: 400 });
             }

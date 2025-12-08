@@ -56,9 +56,9 @@ export default function Home() {
   }, [showList]);
 
   return (
-    <section className="flex flex-col items-start justify-start min-w-full h-full">
+    <section className="flex flex-col items-start justify-start min-w-full h-screen">
       <nav className=" max-[750px]:hidden w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
-        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
+        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
         <SearchBar />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
@@ -67,7 +67,7 @@ export default function Home() {
       </nav>
       <nav className="min-[750px]:hidden w-full h-auto py-3 px-5 flex flex-col items-center justify-center text-white shadow-md dark:shadow-md dark:shadow-black">
         <div className="w-full flex flex-row items-start justify-between mb-3">
-          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} user={user} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
+          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
           <div className="flex flex-row gap-4">
             <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
             <ToggleTheme />
@@ -91,7 +91,7 @@ export default function Home() {
       {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} setNotice={setNotice} />}
       {showSignup && <Signup setShowSignup={setShowSignup} setShowLogin={setShowLogin} fetchUser={fetchUser} />}
       {!loading && showProfile && user && <Profile setShowProfile={setShowProfile} fetchUser={fetchUser} user={user} setNotice={setNotice} />}
-      {addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} activeBoardId={activeBoardId} setActiveListId={setActiveListId} setActiveNoteId={setActiveNoteId} />}
+      {addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} activeBoardId={activeBoardId} setActiveListId={setActiveListId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
       {addNewText && <AddText showList={showList} setAddNewText={setAddNewText} setNotice={setNotice} activeBoardId={activeBoardId} activeListId={activeListId} activeNoteId={activeNoteId} />}
       {addNewBoard && <AddBoard setAddNewBoard={setAddNewBoard} setAddNewTitle={setAddNewTitle} setActiveBoardId={setActiveBoardId} />}
       {notice && <Notice notice={notice} setNotice={setNotice} />}

@@ -16,10 +16,10 @@ export async function GET() {
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-        const loggedInUserId = decodedToken.id;
-        let notes = await Note.find({ user: loggedInUserId });
-        return NextResponse.json(notes, { status: 200 });
+        const userId = decodedToken.id;
 
+        let notes = await Note.find({ user: userId });
+        return NextResponse.json(notes, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error.message || "Something went wrong" }, { status: 500 });
     }

@@ -10,10 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
-import { ConstructionIcon } from "lucide-react";
 import { useState } from "react";
 
-export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardId, setActiveListId, setActiveNoteId }) {
+export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardId, setActiveListId, setActiveNoteId, notes, boards }) {
     const [title, setTitle] = useState("");
     const [error, setError] = useState("");
 
@@ -24,10 +23,13 @@ export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardI
         }
         try {
             let res = await axios.patch("/api/user/add-title", { title, boardId: activeBoardId });
-            setAddNewTitle(false);
-            showList ? setActiveListId(res.data.user.boards.find(b => b._id === activeBoardId).lists.find(l => l.title === title)._id) : setActiveNoteId(res.data.user.notes.find(n => n.title === title)._id);
             setAddNewText(true);
-            setTitle("");
+            setAddNewTitle(false);
+            if (showList) {
+                setActiveListId(res.data.newList._id);
+            } else {
+                setActiveNoteId(res.data.newNote._id);
+            }
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
             if (error.response) {
@@ -67,8 +69,8 @@ export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardI
                                 required
                             />
                         </div>
+                        {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
                     </form>
-                    {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
                 </CardContent>
                 <CardFooter>
                     <Button onClick={handleCreateTitle} type="submit" className="w-full">

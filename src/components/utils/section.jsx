@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Section({ showList, setShowList, setAddNewTitle, user, setAddNewBoard, setActiveBoardId, setActiveNoteId, notes, boards }) {
+export function Section({ showList, setShowList, setAddNewTitle, setAddNewBoard, setActiveBoardId, setActiveNoteId, notes, boards }) {
 
   return (
     <>
@@ -26,8 +26,8 @@ export function Section({ showList, setShowList, setAddNewTitle, user, setAddNew
             <h1 className="font-semibold">{showList ? "Notes" : "Boards"}</h1>
           </DropdownMenuItem>
           <DropdownMenuGroup>
-            <DropdownMenuItem className="p-4">
-              <h1 onClick={() => { setActiveBoardId(null); setActiveNoteId(null) }} className="font-semibold text-lg">ALL</h1>
+            <DropdownMenuItem onClick={() => setActiveBoardId(null)} className="p-4">
+              <h1 className="font-semibold text-lg">ALL</h1>
             </DropdownMenuItem>
             {showList ? (boards.map((board) => (
               <DropdownMenuItem key={board._id} onClick={() => setActiveBoardId(board._id)} className="p-4 flex flex-row items-center justify-start gap-2">
@@ -36,7 +36,7 @@ export function Section({ showList, setShowList, setAddNewTitle, user, setAddNew
               </DropdownMenuItem>
             ))
             ) : (notes.map((note) => (
-              <DropdownMenuItem key={note.id} className="p-4 flex flex-row items-center justify-start gap-2">
+              <DropdownMenuItem key={note._id} className="p-4 flex flex-row items-center justify-start gap-2">
                 <Notebook />
                 <h1 className="font-semibold">{note.title}</h1>
               </DropdownMenuItem>

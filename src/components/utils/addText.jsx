@@ -51,8 +51,9 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
       return;
     }
     try {
-      await axios.patch("/api/user/add-text", { text, boardId: activeBoardId, listId: activeListId });
+      let res = await axios.patch("/api/user/add-text", { text, boardId: activeBoardId, listId: activeListId });
       setText("");
+
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
       if (error.response) {
@@ -92,9 +93,9 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
                 required
               />
             </div>
+            {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
           </form>
         </CardContent>
-        {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
         <CardFooter className="flex flex-col">
           <Button onClick={handleSave} type="submit" className="w-full">
             Save

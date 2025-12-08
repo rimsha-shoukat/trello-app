@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen min-w-full">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem >
-          {children} 
+          {children}
         </ThemeProvider>
       </body>
     </html>

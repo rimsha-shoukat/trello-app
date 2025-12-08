@@ -1,6 +1,6 @@
 "use server";
 import { User } from "@/models/user.model.js";
-import { Note } from "@/models/note.model.js"; 
+import { Note } from "@/models/note.model.js";
 import { Board } from "@/models/board.model.js";
 import { NextResponse } from "next/server";
 import connectDB from "@/app/database/db.js";
@@ -21,7 +21,7 @@ export async function PATCH(request) {
         const loggedInUserId = decodedToken.id;
 
         const req = await request.json();
-        const { title, boardId } = req; 
+        const { title, boardId } = req;
 
         if (!title || title.trim() === "") {
             return NextResponse.json({ error: "Title is a required field" }, { status: 400 });
@@ -46,7 +46,7 @@ export async function PATCH(request) {
             return NextResponse.json({
                 message: "Note created successfully",
                 success: true,
-                user: user,
+                newNote
             }, { status: 200 });
         }
 
@@ -61,11 +61,12 @@ export async function PATCH(request) {
 
         board.lists.push({ title: title, cards: [] });
         await board.save();
+        let newList = board.lists[board.lists.length - 1];
 
         return NextResponse.json({
             message: "List created successfully",
             success: true,
-            board: board, 
+            newList
         }, { status: 200 });
 
     } catch (error) {
