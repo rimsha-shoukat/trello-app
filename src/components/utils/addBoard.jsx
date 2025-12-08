@@ -23,9 +23,9 @@ export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId }) {
         }
         try {
             let res = await axios.patch("/api/user/add-board", { boardName });
+            setActiveBoardId(res.data.newBoard._id || null);
             setAddNewBoard(false);
             setAddNewTitle(true);
-            setActiveBoardId(res.data.user.boards.find(b => b.title === boardName)._id || null);
             setBoardName("");
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
@@ -67,8 +67,8 @@ export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId }) {
                             />
                         </div>
                     </form>
+                    {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
                 </CardContent>
-                {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
                 <CardFooter>
                     <Button onClick={handleCreateBoard} type="submit" className="w-full">
                         Create Board

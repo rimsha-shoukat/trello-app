@@ -6,12 +6,11 @@ import { Card } from "@/components/utils/card.jsx";
 import axios from "axios";
 
 export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice, boards, setBoards }) {
-    let activeBoard = boards.find(b => b._id === activeBoardId) || null;
-
+    let activeBoard = boards.find(b => b._id === activeBoardId) || [];
     const fetchBoards = async () => {
         try {
             let res = await axios.get("/api/user/get-boards");
-            setBoards(res.data || null);
+            setBoards(res.data || []);
         } catch (error) {
             console.error("Error fetching notes:", error);
         }
@@ -19,7 +18,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
 
     useEffect(() => {
         fetchBoards();
-    }, [user]);
+    }, [user.boards.length]);
 
     if (user.boards.length <= 0) {
         return (
@@ -63,7 +62,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
 
     return (
         <div className="w-full h-auto columns-3 max-[750px]:columns-2 max-[540px]:columns-1">
-            {activeBoard.lists.map((list) => (
+            {activeBoard.lists && activeBoard.lists.map((list) => (
                 <div key={list._id} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
                     <span className="w-full flex flex-row items-start justify-between mb-4">
                         <span>

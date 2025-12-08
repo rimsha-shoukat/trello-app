@@ -21,7 +21,7 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
       return;
     }
     try {
-      let res = await axios.patch("/api/user/add-text", { text, boardId: activeBoardId, listId: activeListId, noteId: activeNoteId });
+      let res = await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoardId : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
       setAddNewText(false);
       setText("");
       setNotice(res.data.message || `${showList ? "Card" : "Note"} created successfully!`);
@@ -51,9 +51,8 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
       return;
     }
     try {
-      let res = await axios.patch("/api/user/add-text", { text, boardId: activeBoardId, listId: activeListId });
+      await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoardId : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
       setText("");
-
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
       if (error.response) {
@@ -86,7 +85,7 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
             <div className="grid gap-2 mb-2">
               <Label>Add {showList ? "Card" : "Note"} text</Label>
               <textarea className="p-2 rounded-sm border border-gray-500"
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => setText(e.target.value)} value={text}
                 id={showList ? "Card" : "Note"}
                 rows="4"
                 placeholder={showList ? "Enter Card text" : "Enter Note text"}

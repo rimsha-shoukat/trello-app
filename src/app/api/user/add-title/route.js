@@ -21,7 +21,7 @@ export async function PATCH(request) {
         const loggedInUserId = decodedToken.id;
 
         const req = await request.json();
-        const { title, boardId } = req;
+        const { title, boardId, showList } = req;
 
         if (!title || title.trim() === "") {
             return NextResponse.json({ error: "Title is a required field" }, { status: 400 });
@@ -32,13 +32,13 @@ export async function PATCH(request) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        if (boardId === null) {
+        if (!showList) {
             const existingNote = await Note.findOne({ title: title, user: loggedInUserId });
             if (existingNote) {
                 return NextResponse.json({ error: "Note title already exists" }, { status: 400 });
             }
 
-            const newNote = new Note({ title: title, text: "", user: loggedInUserId });
+            const newNote = await new Note({ title: title, text: "", user: loggedInUserId });
             await newNote.save();
 
             user.notes.push(newNote._id);
@@ -50,24 +50,26 @@ export async function PATCH(request) {
             }, { status: 200 });
         }
 
-        const board = await Board.findOne({ _id: boardId, user: loggedInUserId });
-        if (!board) {
-            return NextResponse.json({ error: "Board not found" }, { status: 404 });
+        if (showList) {
+            const board = await Board.findOne({ _id: boardId, user: loggedInUserId });
+            if (!board) {
+                return NextResponse.json({ error: "Board not found" }, { status: 404 });
+            }
+
+            if (board.lists && board.lists.some(list => list.title === title)) {
+                return NextResponse.json({ error: "List title already exists" }, { status: 400 });
+            }
+
+            await board.lists.push({ title: title, cards: [] });
+            await board.save();
+            let newList = board.lists[board.lists.length - 1];
+
+            return NextResponse.json({
+                message: "List created successfully",
+                success: true,
+                newList
+            }, { status: 200 });
         }
-
-        if (board.lists && board.lists.some(list => list.title === title)) {
-            return NextResponse.json({ error: "List title already exists" }, { status: 400 });
-        }
-
-        board.lists.push({ title: title, cards: [] });
-        await board.save();
-        let newList = board.lists[board.lists.length - 1];
-
-        return NextResponse.json({
-            message: "List created successfully",
-            success: true,
-            newList
-        }, { status: 200 });
 
     } catch (error) {
         if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {

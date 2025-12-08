@@ -22,7 +22,7 @@ export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardI
             return;
         }
         try {
-            let res = await axios.patch("/api/user/add-title", { title, boardId: activeBoardId });
+            let res = await axios.patch("/api/user/add-title", { title, boardId: activeBoardId, showList });
             setAddNewText(true);
             setAddNewTitle(false);
             if (showList) {

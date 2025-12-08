@@ -1,6 +1,6 @@
 "use server";
 import { User } from "@/models/user.model.js";
-import { Board } from "@/models/board.model.js"; 
+import { Board } from "@/models/board.model.js";
 import { NextResponse } from "next/server";
 import connectDB from "@/app/database/db.js";
 import jwt from "jsonwebtoken";
@@ -36,7 +36,7 @@ export async function PATCH(request) {
             return NextResponse.json({ error: "Board name already exists" }, { status: 400 });
         }
 
-        const newBoard = new Board({ title: boardName, lists: [], user: loggedInUserId });
+        const newBoard = await new Board({ title: boardName, lists: [], user: loggedInUserId });
         await newBoard.save();
 
         user.boards.push(newBoard._id);
@@ -45,7 +45,7 @@ export async function PATCH(request) {
         return NextResponse.json({
             message: "Board created successfully",
             success: true,
-            user: updatedUser,
+            newBoard
         }, { status: 200 });
 
     } catch (error) {

@@ -1,7 +1,7 @@
 "use server";
 import { User } from "@/models/user.model.js";
-import { Note } from "@/models/note.model.js"; 
-import { Board } from "@/models/board.model.js"; 
+import { Note } from "@/models/note.model.js";
+import { Board } from "@/models/board.model.js";
 import { NextResponse } from "next/server";
 import connectDB from "@/app/database/db.js";
 import jwt from "jsonwebtoken";
@@ -22,18 +22,18 @@ export async function PATCH(request) {
         const loggedInUserId = decodedToken.id;
 
         const req = await request.json();
-        const { text, boardId, listId, noteId } = req;
+        const { text, boardId, listId, noteId, showList } = req;
 
         if (!text || text.trim() === "") {
             return NextResponse.json({ error: "Text is a required field" }, { status: 400 });
         }
-        
+
         const user = await User.findOne({ _id: loggedInUserId }).select("-password");
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        if (!listId || !boardId) {
+        if (!showList) {
             if (!noteId) {
                 return NextResponse.json({ error: "noteId is required to update a note" }, { status: 400 });
             }
@@ -41,7 +41,7 @@ export async function PATCH(request) {
             if (!note) {
                 return NextResponse.json({ error: "Note not found or not owned by user" }, { status: 404 });
             }
-            note.text = note.text ? `${note.text}\n${text}` : text;
+            note.text = text;
             await note.save();
             return NextResponse.json({
                 message: "Note updated successfully",
@@ -50,7 +50,7 @@ export async function PATCH(request) {
             }, { status: 200 });
         }
 
-        if (noteId === null) {
+        if (showList) {
             if (!boardId || !listId) {
                 return NextResponse.json({ error: "boardId and listId are required to add a card" }, { status: 400 });
             }
@@ -70,19 +70,6 @@ export async function PATCH(request) {
                 board: board,
             }, { status: 200 });
         }
-
-        const note = await Note.findOne({ _id: noteId, user: loggedInUserId });
-        if (!note) {
-            return NextResponse.json({ error: "Note not found or not owned by user" }, { status: 404 });
-        }
-        note.text = note.text ? `${note.text}\n${text}` : text;
-        await note.save();
-        return NextResponse.json({
-            message: "Note updated successfully",
-            success: true,
-            note: note,
-        }, { status: 200 });
-
     } catch (error) {
         if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
             return NextResponse.json({ error: "Unauthorized: Invalid or expired token" }, { status: 401 });
