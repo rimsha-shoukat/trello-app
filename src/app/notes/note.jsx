@@ -26,13 +26,27 @@ export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
             let res = await axios.get("/api/user/get-notes");
             setNotes(res.data || []);
         } catch (error) {
-            console.error("Error fetching notes:", error);
+            let errorMessage = "An unknown error occurred!!";
+            if (error.response) {
+                if (typeof error.response.data.message === 'string') {
+                    errorMessage = error.response.data.message;
+                } else if (typeof error.response.data === 'string') {
+                    errorMessage = error.response.data;
+                } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+                    errorMessage = error.response.data.error;
+                }
+            } else if (error.request) {
+                errorMessage = "Network Error!! please check your internet connection.";
+            } else {
+                errorMessage = error.message;
+            }
+            setNotice(errorMessage);
         }
     }
 
     useEffect(() => {
         fetchNotes();
-    }, [user.notes.length]);
+    }, []);
 
     const handleShow = (id) => {
         let section = document.getElementById(id);
@@ -47,8 +61,8 @@ export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
         let value = document.querySelector(`section[id='${noteId}'] textarea`).value;
         setSaveId(noteId);
         try {
-            let res = await axios.patch("/api/user/update-note", { noteId, text: value });
-            setNotes(res.data || []);
+            await axios.patch("/api/user/update-note", { noteId, text: value });
+            fetchNotes();
             setNotice("Note updated successfully");
             setSaveId(null);
         } catch (error) {
@@ -72,8 +86,8 @@ export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
 
     const handleRemoveNote = async (noteId) => {
         try {
-            let res = await axios.patch("/api/user/remove-note", { noteId });
-            setNotes(res.data || []);
+            await axios.patch("/api/user/remove-note", { noteId });
+            fetchNotes();
             setNotice("Note removed successfully");
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
@@ -100,7 +114,7 @@ export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
                 <div key={note._id} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-600 bg-gray-200 dark:bg-gray-900 shadow-sm">
                     <span className="w-full flex flex-row items-start justify-between mb-4">
                         <span>
-                            <h1>{note.title}</h1>
+                            <h1 className="font-bold">{note.title}</h1>
                             <p className="text-xs">Created at: {note.createdAt}</p>
                         </span>
                         <span className="flex flex-row items-center justify-center flex-nowrap">
@@ -114,7 +128,6 @@ export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
                     </section>
                 </div>
             ))}
-
         </div>
     )
 }
