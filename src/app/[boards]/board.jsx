@@ -127,12 +127,12 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
     }
 
     return (
-        <div className="w-full h-auto columns-3 max-[750px]:columns-2 max-[540px]:columns-1">
+        <div className="w-full h-auto columns-3 max-[990px]:columns-2 max-[670px]:columns-1">
             {activeBoard.lists && activeBoard.lists.map((list) => (
                 <div key={list._id} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
                     <span className="w-full flex flex-row items-start justify-between mb-4">
                         <span>
-                            <h1 className="font-bold">{list.title}</h1>
+                            <h1 className="font-bold">{list.title.substring(0, 15)}</h1>
                             <p className="text-xs">{list.cards.length} cards</p>
                         </span>
                         <span className="flex flex-row items-center justify-center flex-nowrap">
