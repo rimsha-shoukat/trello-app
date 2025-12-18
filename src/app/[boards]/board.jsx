@@ -5,31 +5,8 @@ import { ChevronDown, CirclePlus, Notebook, DiamondMinus } from "lucide-react";
 import { Card } from "@/components/utils/card.jsx";
 import axios from "axios";
 
-export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice, boards, setBoards }) {
+export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice, boards, fetchBoards }) {
     let activeBoard = boards.find(b => b._id === activeBoardId) || [];
-
-    const fetchBoards = async () => {
-        try {
-            let res = await axios.get("/api/user/get-boards");
-            setBoards(res.data || []);
-        } catch (error) {
-            let errorMessage = "An unknown error occurred!!";
-            if (error.response) {
-                if (typeof error.response.data.message === 'string') {
-                    errorMessage = error.response.data.message;
-                } else if (typeof error.response.data === 'string') {
-                    errorMessage = error.response.data;
-                } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
-                    errorMessage = error.response.data.error;
-                }
-            } else if (error.request) {
-                errorMessage = "Network Error!! please check your internet connection.";
-            } else {
-                errorMessage = error.message;
-            }
-            setNotice(errorMessage);
-        }
-    }
 
     useEffect(() => {
         fetchBoards();
@@ -51,11 +28,11 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
 
     const handleRemoveBoard = async (boardId) => {
         try {
+            await axios.patch("/api/user/remove-board", { boardId });
             setActiveBoardId(null);
             setActiveListId(null);
-            await axios.patch("/api/user/remove-board", { boardId });
-            setNotice("Board removed successfully");
             fetchBoards();
+            setNotice("Board removed successfully");
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
             if (error.response) {
@@ -79,8 +56,8 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
         try {
             setActiveListId(null);
             await axios.patch("/api/user/remove-list", { listId, activeBoardId });
-            setNotice("List removed successfully");
             fetchBoards();
+            setNotice("List removed successfully");
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
             if (error.response) {
@@ -140,8 +117,8 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
                             <Button onClick={() => handleShow(list._id)} className="hover:bg-gray-300" variant="ghost"><ChevronDown /></Button>
                         </span>
                     </span>
-                    <section id={list._id} className="w-full h-auto flex flex-col items-center justify-center gap-2">
-                        <Card list={list} setNotice={setNotice} boardId={activeBoard._id} />
+                    <section id={list._id} className="w-full h-auto flex flex-col items-center justify-center gap-2 transition-transform duration-300 ease-in-out">
+                        <Card list={list} setNotice={setNotice} boardId={activeBoard._id} fetchBoards={fetchBoards} />
                     </section>
                     <span className="w-full flex flex-row items-center justify-between p-2 mt-4">
                         <p className="text-xs">Created at: {list.createdAt}</p>

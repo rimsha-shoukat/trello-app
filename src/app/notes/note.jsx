@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Notebook, DiamondMinus, CloudCheck } from "lucide-react";
 import axios from "axios";
 
-export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
+export function Note({ setAddNewTitle, user, setNotice, notes, fetchNotes }) {
     const [saveId, setSaveId] = useState(null);
 
     if (user.notes.length <= 0 || user.notes === null || user.notes === undefined) {
@@ -21,40 +21,13 @@ export function Note({ setAddNewTitle, user, setNotice, notes, setNotes }) {
         )
     }
 
-    const fetchNotes = async () => {
-        try {
-            let res = await axios.get("/api/user/get-notes");
-            setNotes(res.data || []);
-        } catch (error) {
-            let errorMessage = "An unknown error occurred!!";
-            if (error.response) {
-                if (typeof error.response.data.message === 'string') {
-                    errorMessage = error.response.data.message;
-                } else if (typeof error.response.data === 'string') {
-                    errorMessage = error.response.data;
-                } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
-                    errorMessage = error.response.data.error;
-                }
-            } else if (error.request) {
-                errorMessage = "Network Error!! please check your internet connection.";
-            } else {
-                errorMessage = error.message;
-            }
-            setNotice(errorMessage);
-        }
-    }
-
     useEffect(() => {
         fetchNotes();
     }, []);
 
     const handleShow = (id) => {
         let section = document.getElementById(id);
-        if (section.style.display === "none") {
-            section.style.display = "block";
-            return;
-        }
-        section.style.display = "none";
+        section.style.display = section.style.display === "none" ? "block" : "none";
     }
 
     const handleNoteUpdate = async (noteId) => {

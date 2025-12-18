@@ -48,8 +48,56 @@ export default function Home() {
     }
   }
 
+  const fetchBoards = async () => {
+    try {
+      let res = await axios.get("/api/user/get-boards");
+      setBoards(res.data || []);
+    } catch (error) {
+      let errorMessage = "An unknown error occurred!!";
+      if (error.response) {
+        if (typeof error.response.data.message === 'string') {
+          errorMessage = error.response.data.message;
+        } else if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+          errorMessage = error.response.data.error;
+        }
+      } else if (error.request) {
+        errorMessage = "Network Error!! please check your internet connection.";
+      } else {
+        errorMessage = error.message;
+      }
+      setNotice(errorMessage);
+    }
+  }
+
+  const fetchNotes = async () => {
+    try {
+      let res = await axios.get("/api/user/get-notes");
+      setNotes(res.data || []);
+    } catch (error) {
+      let errorMessage = "An unknown error occurred!!";
+      if (error.response) {
+        if (typeof error.response.data.message === 'string') {
+          errorMessage = error.response.data.message;
+        } else if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+          errorMessage = error.response.data.error;
+        }
+      } else if (error.request) {
+        errorMessage = "Network Error!! please check your internet connection.";
+      } else {
+        errorMessage = error.message;
+      }
+      setNotice(errorMessage);
+    }
+  }
+
   useEffect(() => {
     fetchUser();
+    fetchBoards();
+    fetchNotes();
   }, []);
 
   useEffect(() => {
@@ -83,9 +131,9 @@ export default function Home() {
         ) : !user ? (
           <Landing setShowLogin={setShowLogin} />
         ) : showList ? (
-          <Board user={user} setAddNewBoard={setAddNewBoard} setActiveListId={setActiveListId} activeBoardId={activeBoardId} setActiveBoardId={setActiveBoardId} setNotice={setNotice} boards={boards} setBoards={setBoards} />
+          <Board user={user} setAddNewBoard={setAddNewBoard} setActiveListId={setActiveListId} activeBoardId={activeBoardId} setActiveBoardId={setActiveBoardId} setNotice={setNotice} boards={boards} fetchBoards={fetchBoards} />
         ) : (
-          <Note setAddNewTitle={setAddNewTitle} user={user} setNotice={setNotice} notes={notes} setNotes={setNotes} />
+          <Note setAddNewTitle={setAddNewTitle} user={user} setNotice={setNotice} notes={notes} fetchNotes={fetchNotes} />
         )}
       </main>
       {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} setNotice={setNotice} />}
