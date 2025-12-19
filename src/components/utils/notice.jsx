@@ -6,7 +6,7 @@ export function Notice({ notice, setNotice }) {
     useEffect(() => {
         setTimeout(() => {
             setNotice(null);
-        }, 3000);
+        }, 2000);
     }, [notice]);
 
     return (

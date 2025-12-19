@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import React, { useState } from "react";
 
-export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId }) {
+export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId, fetchBoards }) {
     const [boardName, setBoardName] = useState("");
     const [error, setError] = useState("");
 
@@ -27,6 +27,7 @@ export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId }) {
             setAddNewBoard(false);
             setAddNewTitle(true);
             setBoardName("");
+            fetchBoards();
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
             if (error.response) {

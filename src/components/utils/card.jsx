@@ -58,6 +58,30 @@ export function Card({ list, setNotice, boardId, fetchBoards }) {
         }
     };
 
+    const handleRemoveCard = async (cardId) => {
+        try {
+            await axios.patch("/api/user/remove-card", { cardId, listId: list._id, boardId });
+            setNotice("Card removed successfully!");
+            fetchBoards();
+        } catch (error) {
+            let errorMessage = "An unknown error occurred!!";
+            if (error.response) {
+                if (typeof error.response.data.message === 'string') {
+                    errorMessage = error.response.data.message;
+                } else if (typeof error.response.data === 'string') {
+                    errorMessage = error.response.data;
+                } else if (error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+                    errorMessage = error.response.data.error;
+                }
+            } else if (error.request) {
+                errorMessage = "Network Error!! please check your internet connection.";
+            } else {
+                errorMessage = error.message;
+            }
+            setNotice(errorMessage);
+        }
+    }
+
     return (
         list.cards.map((card) => (
             <div id={card._id} key={card._id} className={`w-full h-auto flex flex-row items-center justify-start gap-2 border border-gray-400 rounded-md p-2 bg-gray-400/50 dark:bg-gray-950/50 shadow-sm mb-2 ${card.complete ? "opacity-50" : ""}`}>
@@ -66,7 +90,7 @@ export function Card({ list, setNotice, boardId, fetchBoards }) {
                 {isEditing === card._id ? (
                     <Button onClick={() => handleCardUpdate(card._id)} className="hover:bg-gray-300" variant="ghost"><CloudCheck /></Button>
                 ) : (
-                    <Button className="hover:bg-gray-300" variant="ghost"><DiamondMinus /></Button>
+                    <Button onClick={() => handleRemoveCard(card._id)} className="hover:bg-gray-300" variant="ghost"><DiamondMinus /></Button>
                 )}
             </div>
         ))

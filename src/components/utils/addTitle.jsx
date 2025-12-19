@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useState } from "react";
 
-export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardId, setActiveListId, setActiveNoteId, notes, boards }) {
+export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardId, setActiveListId, setActiveNoteId, fetchNotes, fetchBoards }) {
     const [title, setTitle] = useState("");
     const [error, setError] = useState("");
 
@@ -27,8 +27,10 @@ export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardI
             setAddNewTitle(false);
             if (showList) {
                 setActiveListId(res.data.newList._id);
+                fetchBoards();
             } else {
                 setActiveNoteId(res.data.newNote._id);
+                fetchNotes();
             }
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";

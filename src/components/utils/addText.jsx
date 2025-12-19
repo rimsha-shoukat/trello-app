@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useState } from "react";
 
-export function AddText({ showList, setAddNewText, setNotice, activeBoardId, activeListId, activeNoteId }) {
+export function AddText({ showList, setAddNewText, setNotice, activeBoardId, activeListId, activeNoteId, fetchNotes, fetchBoards }) {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
@@ -24,6 +24,11 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
       let res = await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoardId : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
       setAddNewText(false);
       setText("");
+      if (showList) {
+        fetchBoards();
+      } else {
+        fetchNotes();
+      }
       setNotice(res.data.message || `${showList ? "Card" : "Note"} created successfully!`);
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
@@ -53,6 +58,7 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
     try {
       await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoardId : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
       setText("");
+      fetchBoards();
     } catch (error) {
       let errorMessage = "An unknown error occurred!!";
       if (error.response) {
