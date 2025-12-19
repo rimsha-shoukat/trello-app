@@ -107,7 +107,7 @@ export default function Home() {
     <section className="flex flex-col items-start justify-start min-w-full h-screen overflow-hidden light:bg-gray-100">
       <nav className=" max-[750px]:hidden w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
         {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
-        <SearchBar />
+        <SearchBar user={user} showList={showList} notes={notes} boards={boards} activeBoardId={activeBoardId} setNotes={setNotes} setBoards={setBoards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
           <ToggleTheme />
@@ -121,7 +121,7 @@ export default function Home() {
             <ToggleTheme />
           </div>
         </div>
-        <SearchBar />
+        <SearchBar user={user} showList={showList} notes={notes} boards={boards} activeBoardId={activeBoardId} setNotes={setNotes} setBoards={setBoards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />
       </nav>
       <main className="w-full h-full p-6 overflow-x-hidden overflow-y-scroll">
         {loading ? (
