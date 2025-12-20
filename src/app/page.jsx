@@ -29,11 +29,12 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState("");
   const [addNewBoard, setAddNewBoard] = useState(false);
-  const [activeBoardId, setActiveBoardId] = useState(null);
+  const [activeBoard, setActiveBoard] = useState(null);
   const [activeListId, setActiveListId] = useState(null);
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [notes, setNotes] = useState([]);
   const [boards, setBoards] = useState([]);
+  const [lists, setLists] = useState([]);
 
   const fetchUser = async () => {
     setLoading(true);
@@ -106,8 +107,8 @@ export default function Home() {
   return (
     <section className="flex flex-col items-start justify-start min-w-full h-screen overflow-hidden light:bg-gray-100">
       <nav className=" max-[750px]:hidden w-full h-auto flex flex-row items-start justify-between py-3 px-5 text-white shadow-md dark:shadow-md dark:shadow-black">
-        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
-        <SearchBar user={user} showList={showList} notes={notes} boards={boards} activeBoardId={activeBoardId} setNotes={setNotes} setBoards={setBoards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />
+        {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoard={setActiveBoard} notes={notes} boards={boards} setLists={setLists} />}
+        <SearchBar user={user} showList={showList} notes={notes} boards={boards} activeBoard={activeBoard} setNotes={setNotes} setBoards={setBoards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} setLists={setLists} />
         <div className="flex flex-row gap-4">
           <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
           <ToggleTheme />
@@ -115,13 +116,13 @@ export default function Home() {
       </nav>
       <nav className="min-[750px]:hidden w-full h-auto py-3 px-5 flex flex-col items-center justify-center text-white shadow-md dark:shadow-md dark:shadow-black">
         <div className="w-full flex flex-row items-start justify-between mb-3">
-          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoardId={setActiveBoardId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} />}
+          {user && <Section showList={showList} setShowList={setShowList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} setActiveBoard={setActiveBoard} notes={notes} boards={boards} setLists={setLists} />}
           <div className="flex flex-row gap-4">
             <UserIcon setShowLogin={setShowLogin} setShowProfile={setShowProfile} user={user} />
             <ToggleTheme />
           </div>
         </div>
-        <SearchBar user={user} showList={showList} notes={notes} boards={boards} activeBoardId={activeBoardId} setNotes={setNotes} setBoards={setBoards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />
+        <SearchBar user={user} showList={showList} notes={notes} boards={boards} activeBoard={activeBoard} setNotes={setNotes} setBoards={setBoards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} setLists={setLists} />
       </nav>
       <main className="w-full h-full p-6 overflow-x-hidden overflow-y-scroll">
         {loading ? (
@@ -131,7 +132,7 @@ export default function Home() {
         ) : !user ? (
           <Landing setShowLogin={setShowLogin} />
         ) : showList ? (
-          <Board user={user} setAddNewBoard={setAddNewBoard} setActiveListId={setActiveListId} activeBoardId={activeBoardId} setActiveBoardId={setActiveBoardId} setNotice={setNotice} boards={boards} fetchBoards={fetchBoards} setAddNewText={setAddNewText} />
+          <Board user={user} setAddNewBoard={setAddNewBoard} setActiveListId={setActiveListId} activeBoard={activeBoard} setActiveBoard={setActiveBoard} setNotice={setNotice} boards={boards} fetchBoards={fetchBoards} setAddNewText={setAddNewText} lists={lists} setLists={setLists} />
         ) : (
           <Note setAddNewTitle={setAddNewTitle} user={user} setNotice={setNotice} notes={notes} fetchNotes={fetchNotes} />
         )}
@@ -139,11 +140,11 @@ export default function Home() {
       {!loading && showLogin && !user && <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} fetchUser={fetchUser} setNotice={setNotice} />}
       {showSignup && <Signup setShowSignup={setShowSignup} setShowLogin={setShowLogin} fetchUser={fetchUser} />}
       {!loading && showProfile && user && <Profile setShowProfile={setShowProfile} fetchUser={fetchUser} user={user} setNotice={setNotice} />}
-      {addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} activeBoardId={activeBoardId} setActiveListId={setActiveListId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />}
-      {addNewText && <AddText showList={showList} setAddNewText={setAddNewText} setNotice={setNotice} activeBoardId={activeBoardId} activeListId={activeListId} activeNoteId={activeNoteId} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />}
-      {addNewBoard && <AddBoard setAddNewBoard={setAddNewBoard} setAddNewTitle={setAddNewTitle} setActiveBoardId={setActiveBoardId} fetchBoards={fetchBoards} />}
+      {addNewTitle && <AddTitle showList={showList} setAddNewText={setAddNewText} setAddNewTitle={setAddNewTitle} activeBoard={activeBoard} setActiveListId={setActiveListId} setActiveNoteId={setActiveNoteId} notes={notes} boards={boards} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />}
+      {addNewText && <AddText showList={showList} setAddNewText={setAddNewText} setNotice={setNotice} activeBoard={activeBoard} activeListId={activeListId} activeNoteId={activeNoteId} fetchNotes={fetchNotes} fetchBoards={fetchBoards} />}
+      {addNewBoard && <AddBoard setAddNewBoard={setAddNewBoard} setAddNewTitle={setAddNewTitle} setActiveBoard={setActiveBoard} fetchBoards={fetchBoards} setLists={setLists} />}
       {notice && <Notice notice={notice} setNotice={setNotice} />}
-      {user && <Add showList={showList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} user={user} activeBoardId={activeBoardId} />}
+      {user && <Add showList={showList} setAddNewTitle={setAddNewTitle} setAddNewBoard={setAddNewBoard} user={user} activeBoard={activeBoard} />}
     </section>
   );
 }

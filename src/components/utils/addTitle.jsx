@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useState } from "react";
 
-export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardId, setActiveListId, setActiveNoteId, fetchNotes, fetchBoards }) {
+export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoard, setActiveListId, setActiveNoteId, fetchNotes, fetchBoards }) {
     const [title, setTitle] = useState("");
     const [error, setError] = useState("");
 
@@ -22,7 +22,7 @@ export function AddTitle({ showList, setAddNewText, setAddNewTitle, activeBoardI
             return;
         }
         try {
-            let res = await axios.patch("/api/user/add-title", { title, boardId: activeBoardId, showList });
+            let res = await axios.patch("/api/user/add-title", { title, boardId: activeBoard._id, showList });
             setAddNewText(true);
             setAddNewTitle(false);
             if (showList) {

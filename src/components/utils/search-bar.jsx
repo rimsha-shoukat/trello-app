@@ -1,12 +1,13 @@
 "use client";
 import { Search } from "lucide-react";
 
-export function SearchBar({ user, showList, notes, boards, activeBoardId, setNotes, setBoards, fetchNotes, fetchBoards }) {
+export function SearchBar({ user, showList, notes, boards, activeBoard, setNotes, setBoards, fetchNotes, fetchBoards, setLists }) {
     const handleSearch = (query) => {
         query = query.toLowerCase();
         if (!query) {
             fetchNotes();
             fetchBoards();
+            setLists(activeBoard?.lists || []);
             return;
         }
 
@@ -14,10 +15,17 @@ export function SearchBar({ user, showList, notes, boards, activeBoardId, setNot
             return;
         }
 
-        if (showList && activeBoardId === null) {
+        if (showList && !activeBoard) {
             let filteredBoards = boards.filter(board => board.title.toLowerCase().includes(query));
             setBoards(filteredBoards);
-        } else {
+        }
+
+        if(showList && activeBoard){
+            let filteredLists = activeBoard?.lists.filter(list => list.title.toLowerCase().includes(query));
+            setLists(filteredLists);
+        }
+
+        if(!showList && user) {
             let filteredNotes = notes.filter(note => note.title.toLowerCase().includes(query) || note.text.toLowerCase().includes(query));
             setNotes(filteredNotes);
         }

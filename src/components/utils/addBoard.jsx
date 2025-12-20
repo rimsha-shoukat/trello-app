@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import React, { useState } from "react";
 
-export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId, fetchBoards }) {
+export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoard, fetchBoards, setLists }) {
     const [boardName, setBoardName] = useState("");
     const [error, setError] = useState("");
 
@@ -23,7 +23,8 @@ export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId, fet
         }
         try {
             let res = await axios.patch("/api/user/add-board", { boardName });
-            setActiveBoardId(res.data.newBoard._id || null);
+            setActiveBoard(res.data.newBoard || null);
+            setLists(res.data.newBoard.lists || []);
             setAddNewBoard(false);
             setAddNewTitle(true);
             setBoardName("");
@@ -43,14 +44,15 @@ export function AddBoard({ setAddNewBoard, setAddNewTitle, setActiveBoardId, fet
             } else {
                 errorMessage = error.message;
             }
-            setActiveBoardId(null);
+            setActiveBoard(null);
+            setLists([]);
             setError(errorMessage);
         }
     }
 
     return (
         <>
-            <section onClick={() => { setAddNewBoard(false); setActiveBoardId(null); }} className="absolute w-full h-full bg-[#162238]/50 dark:bg-white/20 shadow-sm">
+            <section onClick={() => { setAddNewBoard(false); setActiveBoard(null); setLists([]); }} className="absolute w-full h-full bg-[#162238]/50 dark:bg-white/20 shadow-sm">
             </section>
             <Card className="w-full max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <CardHeader>

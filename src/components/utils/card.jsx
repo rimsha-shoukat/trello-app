@@ -12,6 +12,7 @@ export function Card({ list, setNotice, boardId, fetchBoards }) {
 
         try {
             await axios.patch("/api/user/update-card", { text: value, cardId, listId: list._id, boardId });
+            fetchBoards();
             setNotice("Card updated successfully!");
             setIsEditing(null);
         } catch (error) {
@@ -61,8 +62,8 @@ export function Card({ list, setNotice, boardId, fetchBoards }) {
     const handleRemoveCard = async (cardId) => {
         try {
             await axios.patch("/api/user/remove-card", { cardId, listId: list._id, boardId });
-            setNotice("Card removed successfully!");
             fetchBoards();
+            setNotice("Card removed successfully!");
         } catch (error) {
             let errorMessage = "An unknown error occurred!!";
             if (error.response) {

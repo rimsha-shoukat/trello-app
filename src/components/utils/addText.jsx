@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useState } from "react";
 
-export function AddText({ showList, setAddNewText, setNotice, activeBoardId, activeListId, activeNoteId, fetchNotes, fetchBoards }) {
+export function AddText({ showList, setAddNewText, setNotice, activeBoard, activeListId, activeNoteId, fetchNotes, fetchBoards }) {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
@@ -21,7 +21,7 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
       return;
     }
     try {
-      let res = await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoardId : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
+      let res = await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoard._id : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
       setAddNewText(false);
       setText("");
       if (showList) {
@@ -56,7 +56,7 @@ export function AddText({ showList, setAddNewText, setNotice, activeBoardId, act
       return;
     }
     try {
-      await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoardId : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
+      await axios.patch("/api/user/add-text", { text, boardId: showList ? activeBoard._id : null, listId: showList ? activeListId : null, noteId: showList ? null : activeNoteId, showList });
       setText("");
       fetchBoards();
     } catch (error) {

@@ -5,8 +5,12 @@ import { ChevronDown, CirclePlus, Notebook, DiamondMinus } from "lucide-react";
 import { Card } from "@/components/utils/card.jsx";
 import axios from "axios";
 
-export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, setActiveBoardId, setNotice, boards, fetchBoards, setAddNewText }) {
-    let activeBoard = boards.find(b => b._id === activeBoardId) || [];
+export function Board({ user, setAddNewBoard, setActiveListId, activeBoard, setActiveBoard, setNotice, boards, fetchBoards, setAddNewText, lists, setLists }) {
+    useEffect(() => {
+        if (activeBoard) {
+            setLists(activeBoard.lists || []);
+        }
+    }, [activeBoard, setLists]);
 
     useEffect(() => {
         fetchBoards();
@@ -29,7 +33,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
     const handleRemoveBoard = async (boardId) => {
         try {
             await axios.patch("/api/user/remove-board", { boardId });
-            setActiveBoardId(null);
+            setActiveBoard(null);
             setActiveListId(null);
             fetchBoards();
             setNotice("Board removed successfully");
@@ -55,7 +59,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
     const handleRemoveList = async (listId) => {
         try {
             setActiveListId(null);
-            await axios.patch("/api/user/remove-list", { listId, activeBoardId });
+            await axios.patch("/api/user/remove-list", { listId, activeBoard: activeBoard._id });
             fetchBoards();
             setNotice("List removed successfully");
         } catch (error) {
@@ -77,12 +81,12 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
         }
     }
 
-    if (activeBoardId === null) {
+    if (activeBoard === null || activeBoard === undefined) {
         return (
             <div className="w-full h-auto columns-3 max-[750px]:columns-2 max-[400px]:columns-1">
                 {
                     boards.map((b) => (
-                        <div key={b._id} onClick={() => setActiveBoardId(b._id)} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
+                        <div key={b._id} onClick={() => { setActiveBoard(b); setLists(b?.lists || []); }} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-300 dark:bg-gray-900 shadow-sm">
                             <span className="w-full flex flex-row items-start justify-between">
                                 <span>
                                     <h1>{b.title}</h1>
@@ -112,7 +116,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoardId, se
         <>
             <h1 className="text-[2rem] font-bold mb-4">{activeBoard.title}</h1>
             <div className="w-full h-auto columns-3 max-[990px]:columns-2 max-[670px]:columns-1">
-                {activeBoard.lists && activeBoard.lists.map((list) => (
+                {activeBoard !== null && lists !== null && lists.map((list) => (
                     <div key={list._id} className="break-inside-avoid mb-4 w-full h-auto p-4 rounded-md border border-gray-400 bg-gray-200 dark:bg-gray-900 shadow-sm">
                         <span className="w-full flex flex-row items-start justify-between mb-4">
                             <span>
