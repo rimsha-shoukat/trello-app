@@ -7,10 +7,14 @@ import axios from "axios";
 
 export function Board({ user, setAddNewBoard, setActiveListId, activeBoard, setActiveBoard, setNotice, boards, fetchBoards, setAddNewText, lists, setLists }) {
     useEffect(() => {
-        if (activeBoard) {
-            setLists(activeBoard.lists || []);
+        if (activeBoard && boards.length > 0) {
+            const updatedBoard = boards.find(b => b._id === activeBoard?._id);
+            if (updatedBoard) {
+                setActiveBoard(updatedBoard);
+                setLists(updatedBoard?.lists || []);
+            }
         }
-    }, [activeBoard, setLists]);
+    }, [boards]);
 
     useEffect(() => {
         fetchBoards();
@@ -59,7 +63,7 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoard, setA
     const handleRemoveList = async (listId) => {
         try {
             setActiveListId(null);
-            await axios.patch("/api/user/remove-list", { listId, activeBoard: activeBoard._id });
+            await axios.patch("/api/user/remove-list", { listId, activeBoardId: activeBoard?._id });
             fetchBoards();
             setNotice("List removed successfully");
         } catch (error) {
