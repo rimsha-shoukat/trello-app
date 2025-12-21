@@ -19,25 +19,36 @@ export default function ResetPassword() {
     const router = useRouter();
     const [password, setPassword] = useState({ one: "", two: "" });
     const [res, setRes] = useState({ show: false, error: false, message: "" });
-    const [validToken, setValidToken] = useState(false);
+    const [validToken, setValidToken] = useState(null);
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
 
-    (async () => {
-        try {
-            let res = await axios.post("/api/user/valid-token", { token });
-            if (res.status === 200) {
-                setValidToken(true);
-            }
-        } catch (error) {
+    useEffect(() => {
+        if (!token) {
             setValidToken(false);
+            return;
         }
-    })();
+
+        const validateToken = async () => {
+            try {
+                const res = await axios.post("/api/user/valid-token", { token });
+                setValidToken(res.status === 200);
+            } catch {
+                setValidToken(false);
+            }
+        };
+
+        validateToken();
+    }, [token]);
 
 
     useEffect(() => {
         setRes({ show: false, error: false, message: "" });
     }, [password]);
+
+    if (validToken === null) {
+        return <p className="text-center mt-10">Validating token...</p>;
+    }
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
