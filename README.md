@@ -7,13 +7,13 @@ Trello App is a task management application that allows users to create boards, 
 ## Features
 
 - **User Authentication**:
-  - Sign in, log in, and sign up
+  - Sign in and log in
   - Change name, email, password
   - Forgot password functionality
-- **Boards & Lists**:
-  - Create and manage boards
-  - Add lists to each board
-  - Add, edit, and delete notes in lists
+- **Boards & Notes**:
+  - Create and manage boards and notes
+  - Add notes and lists to each board
+  - Add, edit, and delete notes and lists in boards
 - **Responsive UI**: 
   - Built with **Tailwind CSS** for a modern and mobile-friendly UI
 - **Theme Support**: 
@@ -25,9 +25,11 @@ Trello App is a task management application that allows users to create boards, 
 
 ## Technologies
 
-- **Frontend**: Next.js, React, Tailwind CSS, ShadCN, lucide-react
-- **Backend**: Node.js, Express, Mongoose, JSON Web Tokens, Nodemailer, axios
+- **Frontend**: Next.js, Tailwind CSS, ShadCN, lucide-react
+- **Backend**: Node.js, Mongoose, JSON Web Tokens, Nodemailer, axios, bcryptjs
 - **Database**: MongoDB
+
+## View on vercel : [Trello task management app](*)
 
 ## Installation
 
@@ -67,7 +69,7 @@ Visit **http://localhost:3000** to access the app.
 
 - **Sign in**: Use your credentials to log in.
 
--**Create boards**: Add boards for task management.
+- **Create boards**: Add boards for task management.
 
 - **Add lists**: Each board can have multiple lists to organize tasks.
 
