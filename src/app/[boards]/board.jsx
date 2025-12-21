@@ -98,7 +98,13 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoard, setA
                                 </span>
                                 <Button onClick={() => handleRemoveBoard(b._id)} className="hover:bg-gray-300" variant="ghost"><DiamondMinus /></Button>
                             </span>
-                            <p className="text-xs mt-2">Created at: {b.createdAt}</p>
+                            <p className="text-xs mt-2">created at: {new Date(b.createdAt).toLocaleString('en-GB', {
+                                day : '2-digit',
+                                month : '2-digit',
+                                year : 'numeric',
+                                hour : '2-digit',
+                                minute : '2-digit'
+                            })}</p>
                         </div>
                     ))
                 }
@@ -136,7 +142,13 @@ export function Board({ user, setAddNewBoard, setActiveListId, activeBoard, setA
                             <Card list={list} setNotice={setNotice} boardId={activeBoard._id} fetchBoards={fetchBoards} />
                         </section>
                         <span className="w-full flex flex-row items-center justify-between p-2 mt-4">
-                            <p className="text-xs">Created at: {list.createdAt}</p>
+                            <p className="text-xs">created at: {new Date(list.createdAt).toLocaleString('en-GB', {
+                                day : '2-digit',
+                                month : '2-digit',
+                                year : 'numeric',
+                                hour : '2-digit',
+                                minute : '2-digit'
+                            })}</p>
                             <Button onClick={() => addCard(list._id)} className="bg-gray-200/50 dark:bg-gray-800" variant="outline">
                                 <CirclePlus />
                             </Button>
