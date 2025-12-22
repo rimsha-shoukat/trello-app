@@ -29,7 +29,7 @@ Trello App is a task management application that allows users to create boards, 
 - **Backend**: Node.js, Mongoose, JSON Web Tokens, Nodemailer, axios, bcryptjs
 - **Database**: MongoDB
 
-## View on vercel : [Trello task management app](*)
+## View on vercel : [Trello task management app](https://trello-app-blush-rho.vercel.app/)
 
 ## Installation
 
