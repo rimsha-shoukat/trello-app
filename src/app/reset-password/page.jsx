@@ -1,4 +1,3 @@
-"use client";
 import { ResetPasswordInner } from "@/components/utils/reset-password-inner";
 import { Suspense } from "react";
 
