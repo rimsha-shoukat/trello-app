@@ -116,12 +116,9 @@ export function Signup({ setShowSignup, setShowLogin, fetchUser }) {
                         </div>
                         {res.show && <p className={`text-sm ${res.error ? "text-red-800" : "text-green-800"}`}>{res.message}</p>}
                     </CardContent>
-                    <CardFooter className="flex-col gap-2">
+                    <CardFooter>
                         <Button type="submit" className="w-full">
                             SignUp
-                        </Button>
-                        <Button variant="outline" className="w-full">
-                            SignUp with Google
                         </Button>
                     </CardFooter>
                 </form>
