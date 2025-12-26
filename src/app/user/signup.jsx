@@ -116,7 +116,7 @@ export function Signup({ setShowSignup, setShowLogin, fetchUser }) {
                         </div>
                         {res.show && <p className={`text-sm ${res.error ? "text-red-800" : "text-green-800"}`}>{res.message}</p>}
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="mt-2">
                         <Button type="submit" className="w-full">
                             SignUp
                         </Button>
